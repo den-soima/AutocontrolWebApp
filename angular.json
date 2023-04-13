@@ -33,7 +33,13 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              {
+                "input": "node_modules/@proleit/sdk-webframe/dist/plantit-web-components.js",
+                "inject": true,
+                "bundleName": "proleit-sdk-webframe"
+              }
+            ]
           },
           "configurations": {
             "production": {
