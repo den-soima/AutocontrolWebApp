@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  serverUrl: 'https://esbsjum54:8777/',
-  redirectUrl: 'https://esbsjum54:8777/',
+  serverUrl: 'https://esbsjum54:8777',
+  redirectUrl: 'http://localhost:4200',
   logoutUrl: 'https://esbsjum54:8777/webportal/home/logout',
   clientId: 'Autocontrol',
   sdApi: 'infrastructure/api/ServiceDiscovery',

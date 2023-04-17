@@ -1,0 +1,66 @@
+.gridTitle {
+  font-weight: 700;
+  font-size: larger;
+  line-height: 60px;
+  vertical-align: middle;
+  text-indent: 1em;
+  background-color: #cecece;
+  align-self: stretch;
+}
+.paddingZero {
+  padding: 0;
+}
+
+.tankColumn {
+  position: relative;
+  border: solid;
+  border-width: 0.15px;
+  border-radius: 3px;
+  border-color: gray;
+  height: 50;
+  text-align: center;
+  opacity: 0.999;
+}
+
+.level {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: orange;
+  z-index: -1;
+}
+
+.splittedCell {
+  padding: 7px 0 7px 0;
+}
+
+.statusField {
+  width: 50%;
+  height: 100%;
+  border: solid 0.15px lightgray;
+  position: sticky;
+  text-align: center;
+  font-weight: bold;
+  span{
+    line-height: 100%;
+  }
+}
+
+.statusContainer {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
+.imageContainer{
+  display: flex;
+  height: 100%;
+  justify-content: left;
+  align-items: center;
+}
+.rankImage{
+  height: 50px;
+  width: 50px;
+
+}

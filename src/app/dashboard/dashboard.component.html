@@ -1,0 +1,105 @@
+<div class="container">
+  <div class="gridTitle">Dashboard</div>
+  <div class="userTable">
+    <kendo-grid
+      [kendoGridBinding]="dashboardData"
+      [selectable]="false"
+      [pageSize]="10"
+      [pageable]="true"
+      [sortable]="true"
+      [columnMenu]="true"
+      [filterable]="false"
+      #grid
+    >
+      <kendo-grid-column field="Line" title="Line"> </kendo-grid-column>
+      <kendo-grid-column field="Nominal" title="Nominal"> </kendo-grid-column>
+      <kendo-grid-column field="Produced" title="Produced">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ formatThousand(dataItem.Produced) }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="Inspectores.Vacio" title="Vacio">
+      </kendo-grid-column>
+      <kendo-grid-column
+        field="Inspectores.Lieno"
+        title="Lieno"
+      ></kendo-grid-column>
+      <kendo-grid-column field="Estimated" title="Estimated">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ formatThousand(dataItem.Estimated) }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="TankActual" title="Tank actual">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="tankColumn">
+            <div
+              class="level"
+              [style.height]="levelCalculation(dataItem.TankActual.Volume)"
+            ></div>
+            <div class="splittedCell">
+              {{ "BBT - " + dataItem.TankActual.Number }}
+            </div>
+            <div class="splittedCell">
+              {{ dataItem.TankActual.Volume + " hl" }}
+            </div>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="TankInQueue" title="Tanque en cola">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="tankColumn" *ngIf="dataItem.TankInQueue.Number">
+            <div
+              class="level"
+              [style.height]="levelCalculation(dataItem.TankInQueue.Volume)"
+            ></div>
+            <div class="splittedCell">
+              {{ "BBT - " + dataItem.TankInQueue.Number }}
+            </div>
+            <div class="splittedCell">
+              {{ dataItem.TankInQueue.Volume + " hl" }}
+            </div>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="RatioAqua" title="Ratio Aqua">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.RatioAqua > 0 ? dataItem.RatioAqua + "%" : "" }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="EficienciaTiempo" title="Eficiencia">
+      </kendo-grid-column>
+      <kendo-grid-column field="Ranking" title="Ranking">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="imageContainer">
+            <img src="{{defineRankImage(dataItem.Ranking)}}" class="rankImage">
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="ProductionTime" title="Production time">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ formatTimeDuration(dataItem.ProductionTime) }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="Status" title="Status" class="paddingZero">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="statusContainer">
+
+            <div class="statusField" [style.backgroundColor]="defineStatusColor(dataItem.Status.Phase1)">
+                <span>
+              {{ defineStatusText(dataItem.Status.Phase1) }}
+            </span>
+            </div>
+
+            <div class="statusField" [style.backgroundColor]="defineStatusColor(dataItem.Status.Phase2)">
+              <span>
+               {{ defineStatusText(dataItem.Status.Phase2) }}
+              </span>
+            </div>
+
+          </div>
+
+        </ng-template> </kendo-grid-column
+      >s
+    </kendo-grid>
+  </div>
+</div>
