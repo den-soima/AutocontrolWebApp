@@ -24,31 +24,24 @@
 
       <kendo-grid-column field="nACId" title="ID"> </kendo-grid-column>
 
-      <kendo-grid-column field="szLineName" title="Line">
-      </kendo-grid-column>
+      <kendo-grid-column field="szLineName" title="Line"> </kendo-grid-column>
 
       <kendo-grid-column field="szACName" title="Line Name">
       </kendo-grid-column>
 
       <kendo-grid-column field="szArea" title="Area"> </kendo-grid-column>
 
-      <kendo-grid-column field="nStatus"  title="Status">
-
-      </kendo-grid-column>
+      <kendo-grid-column field="nStatus" title="Status"> </kendo-grid-column>
 
       <kendo-grid-column field="szStatus" title="Status"> </kendo-grid-column>
 
       <kendo-grid-column field="szComment" title="Comment"> </kendo-grid-column>
 
-      <kendo-grid-column field="tLastModified" title="Last Modified"> </kendo-grid-column>
-
+      <kendo-grid-column field="tLastModified" title="Last Modified">
+      </kendo-grid-column>
     </kendo-grid>
 
-    <kendo-dialog
-      *ngIf="active"
-      [title]="'Edit'"
-      (close)="onCancel()"
-    >
+    <kendo-dialog *ngIf="active" [title]="'Edit'" (close)="onCancel()">
       <form [formGroup]="formGroup">
         <h4>ID</h4>
         <p-inputfield formControlName="nACId"></p-inputfield>
