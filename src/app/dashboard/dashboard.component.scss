@@ -17,7 +17,7 @@
   border-width: 0.15px;
   border-radius: 3px;
   border-color: gray;
-  height: 50;
+  height: 50px;
   text-align: center;
   opacity: 0.999;
 }
@@ -37,13 +37,17 @@
 
 .statusField {
   width: 50%;
-  height: 100%;
+  height: 60px;
   border: solid 0.15px lightgray;
+  border-radius: 3px;
   position: sticky;
   text-align: center;
   font-weight: bold;
+  overflow-wrap: break-word;
   span{
-    line-height: 100%;
+    display: inline-block;
+    position: relative;
+    padding: 25px 0;
   }
 }
 
@@ -56,11 +60,67 @@
 .imageContainer{
   display: flex;
   height: 100%;
-  justify-content: left;
+  justify-content: center;
   align-items: center;
 }
 .rankImage{
   height: 50px;
   width: 50px;
+}
 
+@keyframes progress {
+  0% { --percentage: 0; }
+  100% { --percentage: var(--value); }
+}
+
+@property --percentage {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+[role="progressbar"] {
+  --percentage: var(--value);
+  --primary: rgb(31, 83, 134);
+  --secondary: #adf;
+  --size: 100px;
+  animation: progress 2s 0.5s forwards;
+  width: var(--size);
+  aspect-ratio: 2 / 1;
+  border-radius: 50% / 100% 100% 0 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+[role="progressbar"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(from 0.75turn at 50% 100%, var(--primary) calc(var(--percentage) * 1% / 2), var(--secondary) calc(var(--percentage) * 1% / 2 + 0.1%));
+  mask: radial-gradient(at 50% 100%, white 55%, transparent 55.5%);
+  mask-mode: alpha;
+  -webkit-mask: radial-gradient(at 50% 100%, #0000 55%, #000 55.5%);
+  -webkit-mask-mode: alpha;
+}
+
+[role="progressbar"]::after {
+  counter-reset: percentage var(--value);
+  content: counter(percentage);
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: calc(var(--size) / 5);
+  color: var(--primary);
+}
+
+/* demo */
+.progressCircular {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  background: transparent;
 }

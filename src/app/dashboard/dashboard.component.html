@@ -7,7 +7,7 @@
       [pageSize]="10"
       [pageable]="true"
       [sortable]="true"
-      [columnMenu]="true"
+      [columnMenu]="false"
       [filterable]="false"
       #grid
     >
@@ -18,11 +18,12 @@
           {{ formatThousand(dataItem.Produced) }}
         </ng-template>
       </kendo-grid-column>
-      <kendo-grid-column field="Inspectores.Vacio" title="Vacio">
+      <kendo-grid-column field="Inspectores.Vacio" title="Vacio" [width]="50">
       </kendo-grid-column>
       <kendo-grid-column
         field="Inspectores.Lieno"
         title="Lieno"
+        [width]="50"
       ></kendo-grid-column>
       <kendo-grid-column field="Estimated" title="Estimated">
         <ng-template kendoGridCellTemplate let-dataItem>
@@ -61,43 +62,68 @@
           </div>
         </ng-template>
       </kendo-grid-column>
-      <kendo-grid-column field="RatioAqua" title="Ratio Aqua">
+      <kendo-grid-column field="RatioAqua" title="Ratio Aqua" [style]="{'text-align': 'center'}">
         <ng-template kendoGridCellTemplate let-dataItem>
           {{ dataItem.RatioAqua > 0 ? dataItem.RatioAqua + "%" : "" }}
         </ng-template>
       </kendo-grid-column>
+
       <kendo-grid-column field="EficienciaTiempo" title="Eficiencia">
-      </kendo-grid-column>
-      <kendo-grid-column field="Ranking" title="Ranking">
         <ng-template kendoGridCellTemplate let-dataItem>
-          <div class="imageContainer">
-            <img src="{{defineRankImage(dataItem.Ranking)}}" class="rankImage">
+          <div class="progressCircular">
+            <div
+              role="progressbar"
+              [attr.aria-valuenow]="dataItem.EficienciaTiempo"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              style="--value: {{ dataItem.EficienciaTiempo }}"
+            ></div>
           </div>
         </ng-template>
       </kendo-grid-column>
-      <kendo-grid-column field="ProductionTime" title="Production time">
+
+      <kendo-grid-column field="Ranking" title="Ranking">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="imageContainer">
+            <img
+              src="{{ defineRankImage(dataItem.Ranking) }}"
+              class="rankImage"
+            />
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column field="ProductionTime" title="Production time" [style]="{'text-align': 'center'}">
         <ng-template kendoGridCellTemplate let-dataItem>
           {{ formatTimeDuration(dataItem.ProductionTime) }}
         </ng-template>
       </kendo-grid-column>
-      <kendo-grid-column field="Status" title="Status" class="paddingZero">
+
+      <kendo-grid-column field="Status" title="Status" [width]="170">
         <ng-template kendoGridCellTemplate let-dataItem>
           <div class="statusContainer">
-
-            <div class="statusField" [style.backgroundColor]="defineStatusColor(dataItem.Status.Phase1)">
-                <span>
-              {{ defineStatusText(dataItem.Status.Phase1) }}
-            </span>
-            </div>
-
-            <div class="statusField" [style.backgroundColor]="defineStatusColor(dataItem.Status.Phase2)">
+            <div
+              class="statusField"
+              [style.backgroundColor]="
+                defineStatusColor(dataItem.Status.Phase1)
+              "
+            >
               <span>
-               {{ defineStatusText(dataItem.Status.Phase2) }}
+                {{ defineStatusText(dataItem.Status.Phase1) }}
               </span>
             </div>
 
+            <div
+              class="statusField"
+              [style.backgroundColor]="
+                defineStatusColor(dataItem.Status.Phase2)
+              "
+            >
+              <span>
+                {{ defineStatusText(dataItem.Status.Phase2) }}
+              </span>
+            </div>
           </div>
-
         </ng-template> </kendo-grid-column
       >s
     </kendo-grid>

@@ -17,7 +17,7 @@ export const dashboardData = [
       Volume: 700.05,
     },
     RatioAqua: 0.02,
-    EficienciaTiempo: 656,
+    EficienciaTiempo: 86,
     Ranking: 1,
     ProductionTime: 7200,
     Status: {
@@ -43,7 +43,7 @@ export const dashboardData = [
       Volume: 0,
     },
     RatioAqua: 0.0,
-    EficienciaTiempo: 39,
+    EficienciaTiempo:52,
     Ranking: 2,
     ProductionTime: 9000,
     Status: {
