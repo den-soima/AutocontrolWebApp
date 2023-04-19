@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AutocontrolCrudService } from '../services/autocontrol-crud.service';
-import { AutocontrolData } from 'src/app/interfaces/autocontrol.interface';
+import { IAutocontrol } from 'src/app/interfaces/autocontrol.interface';
 
-const createFormGroup = (autocontorolData: AutocontrolData) =>
+const createFormGroup = (autocontorolItem: IAutocontrol) =>
   new FormGroup({
-    nACId: new FormControl(autocontorolData.nACId),
-    szLineName: new FormControl(autocontorolData.szLineName),
-    szACName: new FormControl(autocontorolData.szACName),
-    szArea: new FormControl(autocontorolData.szArea),
-    nStatus: new FormControl(autocontorolData.nStatus),
-    szComment: new FormControl(autocontorolData.szComment),
-    tLastModified: new FormControl(autocontorolData.tLastModified),
+    nACId: new FormControl(autocontorolItem.nACId),
+    szLineName: new FormControl(autocontorolItem.szLineName),
+    szACName: new FormControl(autocontorolItem.szACName),
+    szArea: new FormControl(autocontorolItem.szArea),
+    // nStatus: new FormControl(autocontorolItem.nStatus),
+    szStatus: new FormControl(autocontorolItem.szStatus),
+    szComment: new FormControl(autocontorolItem.szComment),
+    tLastModified: new FormControl(autocontorolItem.tLastModified),
   });
 
 @Component({
@@ -19,10 +20,10 @@ const createFormGroup = (autocontorolData: AutocontrolData) =>
   templateUrl: './lines.component.html',
   styleUrls: ['./lines.component.scss'],
 })
-export class LinesComponent {
-  public autocontrolData: AutocontrolData[];
-  public active: boolean = false;
+export class LinesComponent implements OnInit {
+  public autocontrolData: IAutocontrol[] = [];
   public isNew: boolean = false;
+  public active = false;
   public editedRowIndex: number = 0;
   public formGroup: FormGroup | any = null;
 
@@ -30,7 +31,13 @@ export class LinesComponent {
    *
    */
   constructor(public autocontrolService: AutocontrolCrudService) {
-    this.autocontrolData = autocontrolService.getAll();
+
+  }
+
+  ngOnInit() {
+    this.autocontrolService.getAll().subscribe((data) => {
+      this.autocontrolData = data;
+    });
   }
 
   // public addHandler() {]
@@ -55,37 +62,27 @@ export class LinesComponent {
     this.editedRowIndex = event.rowIndex;
   }
 
-  // public removeHandler({ dataItem }: any) {
-  //   dataItem.forEach((dataItem: any) => {
-  //     const index: number = this.sampleProducts.indexOf(dataItem);
-  //     if (index !== -1) {
-  //       const cloneProducts = this.sampleProducts;
-  //       cloneProducts.splice(index, 1);
-  //       this.sampleProducts = [];
-  //       cloneProducts.forEach((product) => {
-  //         this.sampleProducts.push(product);
-  //       });
-  //     }
-  //   });
-  // }
+  public removeHandler({ dataItem }: any) {
+    dataItem.forEach((dataItem: any) => {
+      const index: number = this.autocontrolData.indexOf(dataItem);
+      if (index !== -1) {
+        const cloneProducts = this.autocontrolData;
+        cloneProducts.splice(index, 1);
+        this.autocontrolData = [];
+        cloneProducts.forEach((autocontrolItem) => {
+          this.autocontrolData.push(autocontrolItem);
+        });
+      }
+    });
+  }
 
   onSave() {
-    if (this.isNew === false) {
-      const cloneProducts = this.autocontrolData;
-      cloneProducts.splice(this.editedRowIndex, 1, this.formGroup.value);
-      this.autocontrolData = [];
-      cloneProducts.forEach((product) => {
-        this.autocontrolData.push(product);
-      });
-    } else if (this.isNew === true) {
-      const cloneProducts = this.autocontrolData;
-      cloneProducts.push(this.formGroup.value);
-      this.autocontrolData = [];
-      cloneProducts.forEach((product) => {
-        this.autocontrolData.push(product);
-      });
-    }
-
+    const cloneProducts = this.autocontrolData;
+    cloneProducts.splice(this.editedRowIndex, 1, this.formGroup.value);
+    this.autocontrolData = [];
+    cloneProducts.forEach((item) => {
+      this.autocontrolData.push(item);
+    });
     this.active = false;
   }
 

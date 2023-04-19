@@ -7,7 +7,7 @@ export const environment = {
   serverUrl: 'https://esbsjum54:8777',
   redirectUrl: 'http://localhost:4200',
   logoutUrl: 'https://esbsjum54:8777/webportal/home/logout',
-  clientId: 'Autocontrol',
+  clientId: 'AutocontrolApp',
   sdApi: 'infrastructure/api/ServiceDiscovery',
   moduleTechname: 'webortal',
   serviceTechname: 'iitgateway'

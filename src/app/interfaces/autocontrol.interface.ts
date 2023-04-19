@@ -1,4 +1,4 @@
-export interface AutocontrolData {
+export interface IAutocontrol {
   nACId: number;
   szLineName: string;
   szACName: string;

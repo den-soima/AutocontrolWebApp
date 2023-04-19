@@ -3,11 +3,11 @@
   [pageTitle]="title"
   [serverUrl]="pitBaseUrl"
   [baseApplicationId]="clientId"
-  base-token="id_token token"
   base-scopes="'openid basecommon profile'"
   [baseRedirectUrl]="redirectUrl"
   [basePostLogoutRedirectUrl]="logoutUrl"
   [handleRedirect]="frameRedirect"
+  [language]="locale"
   clear-hash-after-login="false"
   logo-type="ProductLogo"
   hide-menu-button="false"
@@ -20,7 +20,7 @@
       <p>Example with multiple child elements</p>
     </div> -->
 </plantit-web-frame>
-<!-- <plantit-web-progress-indicator determinable="true"></plantit-web-progress-indicator> -->
+<plantit-web-progress-indicator determinable="true"></plantit-web-progress-indicator>
 
 <main>
   <plantit-web-sitenavigation is-collapsable="true" basetab-caption="Navigation:">
@@ -42,6 +42,17 @@
         >
           Dashboard
         </a>
+
+      </li>
+      <li>
+        <a
+          routerLink="testgrid"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+        >
+          Test Grid
+        </a>
+
       </li>
     </ul>
   </plantit-web-sitenavigation>

@@ -1,6 +1,7 @@
 <div class="container">
   <div class="gridTitle">Lines</div>
   <div class="userTable">
+    <!-- <ng-container kendoDialogContainer></ng-container> -->
     <kendo-grid
       [kendoGridBinding]="autocontrolData"
       [selectable]="{ mode: 'single' }"
@@ -9,16 +10,27 @@
       [sortable]="true"
       [columnMenu]="true"
       (edit)="editHandler($event)"
+      (remove)="removeHandler($event)"
       #grid
     >
-      <ng-template kendoGridToolbarTemplate>
-        <button kendoButton [look]="'flat'" [icon]="'edit'" pGridButtonEdit>
-          Edit
-        </button>
+      <ng-template kendoGridToolbarTemplate [position]="'top'">
+        <button
+          kendoButton
+          [look]="'flat'"
+          [icon]="'edit'"
+          pGridButtonEdit
+        >Edit</button>
+        <button
+          kendoButton
+          [look]="'flat'"
+          [icon]="'delete'"
+
+          pGridButtonDelete
+        >Delete</button>
       </ng-template>
 
       <kendo-grid-checkbox-column
-        [showSelectAll]="true"
+        [showSelectAll]="false"
         [columnMenu]="false"
       ></kendo-grid-checkbox-column>
 
@@ -41,12 +53,24 @@
       </kendo-grid-column>
     </kendo-grid>
 
-    <kendo-dialog *ngIf="active" [title]="'Edit'" (close)="onCancel()">
+    <kendo-dialog-actions
+      *ngIf="active"
+      [title]="isNew ? 'Add new product' : 'Edit product'"
+      (close)="onCancel()"
+    >
       <form [formGroup]="formGroup">
         <h4>ID</h4>
         <p-inputfield formControlName="nACId"></p-inputfield>
+        <h4>Name</h4>
+        <p-inputfield formControlName="szLineName"></p-inputfield>
         <h4>Line name</h4>
         <p-inputfield formControlName="szACName"></p-inputfield>
+        <h4>Area</h4>
+        <p-inputfield formControlName="szArea"></p-inputfield>
+        <!-- <h4>nStatus</h4>
+        <p-inputfield formControlName="nStatus"></p-inputfield> -->
+        <h4>szStatus</h4>
+        <p-inputfield formControlName="szStatus"></p-inputfield>
         <h4>Comment</h4>
         <p-inputfield formControlName="szComment"></p-inputfield>
         <h4>Last Modified</h4>
@@ -57,6 +81,6 @@
         <button class="k-button" (click)="onCancel()">Cancel</button>
         <button class="k-button k-primary" (click)="onSave()">Save</button>
       </kendo-dialog-actions>
-    </kendo-dialog>
+    </kendo-dialog-actions>
   </div>
 </div>

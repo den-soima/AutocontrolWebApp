@@ -9,9 +9,8 @@ import {
 } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { Router } from "@angular/router";
-import { RestCrudServices } from "./services/rest-crud.service";
-//import { AuthorizationService } from "@proleit/sdk-services-base";
-//import { ServiceDiscoveryService } from "@proleit/sdk-services-base";
+import { AuthorizationService } from "@proleit/sdk-services-base";
+import { ServiceDiscoveryService } from "@proleit/sdk-services-base";
 import { ProcessMessage } from "@proleit/sdk-webframe";
 import { Observable } from "rxjs";
 
@@ -22,23 +21,22 @@ import { Observable } from "rxjs";
 })
 export class AppComponent implements OnInit {
   @HostListener("document:afterRedirect", ["$event"])
-  // afterRedirect(event: CustomEvent) {
-  //   this.router.navigate([event.detail]);
-  // }
-  public listen({ detail }: CustomEvent): void {
-    const url = detail.split("?");
-    if (url.length > 1) {
-      const params: any = {};
-      url[1].split("&").forEach((x: any) => {
-        const a = x.split("=");
-        params[a[0]] = a[1];
-      });
-      this.router.navigate([url[0]], { queryParams: params });
-    } else {
-      this.router.navigate([detail]);
-    }
+  afterRedirect(event: CustomEvent) {
+    this.router.navigate([event.detail]);
   }
-
+  // public listen({ detail }: CustomEvent): void {
+  //   const url = detail.split("?");
+  //   if (url.length > 1) {
+  //     const params: any = {};
+  //     url[1].split("&").forEach((x: any) => {
+  //       const a = x.split("=");
+  //       params[a[0]] = a[1];
+  //     });
+  //     this.router.navigate([url[0]], { queryParams: params });
+  //   } else {
+  //     this.router.navigate([detail]);
+  //   }
+  // }
   public frameRedirect = (uri: string, state: string) => {
     document.dispatchEvent(new CustomEvent('afterRedirect', { detail: state }));
   }
@@ -62,9 +60,8 @@ export class AppComponent implements OnInit {
     @Inject(LOCALE_ID)
     public locale : string,
     private router: Router,
-    public rcservices: RestCrudServices,
-    //private authorization: AuthorizationService,
-    //private serviceDiscovery: ServiceDiscoveryService,
+    private authorization: AuthorizationService,
+    private serviceDiscovery: ServiceDiscoveryService,
     private element: ElementRef,
 
     ) {
@@ -72,12 +69,10 @@ export class AppComponent implements OnInit {
     this.pitBaseUrl = environment.serverUrl;
     this.redirectUrl = environment.redirectUrl;
     this.logoutUrl = environment.logoutUrl;
-    //this.authorization.redirected.subscribe(x => this.router.navigate([x]));
+    this.authorization.redirected.subscribe(x => this.router.navigate([x]));
   }
 
   ngOnInit(): void {
-    this.rcservices.refreshList();
-
     this.element.nativeElement.dispatchEvent(new CustomEvent('loadingProcess', {
       detail: {
         promise: new Promise<ProcessMessage>((resolve, reject) => {
