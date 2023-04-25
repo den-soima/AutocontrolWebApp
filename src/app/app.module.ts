@@ -5,10 +5,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {
-  DIALOG_SERVICE,
-  SdkServicesBaseModule,
-} from '@proleit/sdk-services-base';
+// import {
+//   DIALOG_SERVICE,
+//   SdkServicesBaseModule,
+// } from '@proleit/sdk-services-base';
 import { LinesComponent } from './lines/lines.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SdkComponentsCommonModule } from '@proleit/sdk-components-common';
@@ -34,11 +34,11 @@ import { TestGridComponent } from './test-grid/test-grid.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-     SdkServicesBaseModule.forRoot({
-      "clientId":environment.clientId,
-      "redirectUrl":environment.redirectUrl,
-      "pitBaseUrl":environment.serverUrl,
-      "scopes":"openid profile basecommon"}),
+    //  SdkServicesBaseModule.forRoot({
+    //   "clientId":environment.clientId,
+    //   "redirectUrl":environment.redirectUrl,
+    //   "pitBaseUrl":environment.serverUrl,
+    //   "scopes":"openid profile basecommon"}),
     SdkComponentsCommonModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -53,7 +53,7 @@ import { TestGridComponent } from './test-grid/test-grid.component';
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en' },
-    { provide: DIALOG_SERVICE, useClass: DialogService },
+  //  { provide: DIALOG_SERVICE, useClass: DialogService },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
