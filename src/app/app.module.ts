@@ -23,6 +23,10 @@ import { SdkComponentsValidationModule } from '@proleit/sdk-components-validatio
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { SdkComponentsDateinputsModule } from '@proleit/sdk-components-dateinputs';
 import { TestGridComponent } from './test-grid/test-grid.component';
+import { ReportComponent } from './report/report.component';
+import { DropDownListModule } from "@progress/kendo-angular-dropdowns";
+import { LabelModule } from "@progress/kendo-angular-label";
+import { InputsModule } from "@progress/kendo-angular-inputs";
 
 @NgModule({
   declarations: [
@@ -30,6 +34,7 @@ import { TestGridComponent } from './test-grid/test-grid.component';
     LinesComponent,
     DashboardComponent,
     TestGridComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +55,9 @@ import { TestGridComponent } from './test-grid/test-grid.component';
     SdkComponentsValidationModule,
     SdkComponentsDateinputsModule,
     HttpClientModule,
+    DropDownListModule,
+    LabelModule,
+    InputsModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en' },

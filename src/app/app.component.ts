@@ -21,22 +21,22 @@ import { Observable } from "rxjs";
 })
 export class AppComponent implements OnInit {
   @HostListener("document:afterRedirect", ["$event"])
-  // afterRedirect(event: CustomEvent) {
-  //   this.router.navigate([event.detail]);
-  // }
-  public listen({ detail }: CustomEvent): void {
-    const url = detail.split("?");
-    if (url.length > 1) {
-      const params: any = {};
-      url[1].split("&").forEach((x: any) => {
-        const a = x.split("=");
-        params[a[0]] = a[1];
-      });
-      this.router.navigate([url[0]], { queryParams: params });
-    } else {
-      this.router.navigate([detail]);
-    }
+  afterRedirect(event: CustomEvent) {
+    this.router.navigate([event.detail]);
   }
+  // public listen({ detail }: CustomEvent): void {
+  //   const url = detail.split("?");
+  //   if (url.length > 1) {
+  //     const params: any = {};
+  //     url[1].split("&").forEach((x: any) => {
+  //       const a = x.split("=");
+  //       params[a[0]] = a[1];
+  //     });
+  //     this.router.navigate([url[0]], { queryParams: params });
+  //   } else {
+  //     this.router.navigate([detail]);
+  //   }
+  // }
   public frameRedirect = (uri: string, state: string) => {
     document.dispatchEvent(new CustomEvent('afterRedirect', { detail: state }));
   }

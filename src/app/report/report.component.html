@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="gridTitle">Report</div>
+  <div class="userTable">
+    <div class="selectionBar">
+      <div class="component-container">
+          <kendo-label text="Report line:">
+
+            <kendo-dropdownlist
+              [data]="reportLines"
+              textField="lineName"
+              valueField="lineLink"
+              placeholder="Select line..."
+              [(ngModel)]="selectedLine"
+              (valueChange)="valueChange($event)"
+              ngDefaultControl
+            >
+            </kendo-dropdownlist>
+
+          </kendo-label>
+          <p>
+            Line Link: {{ selectedLine.lineLink }}, Line name:
+            {{ selectedLine.lineName }}
+          </p>
+      </div>
+      <div class="k-grid-layout r-header">
+      <div class="r-h-left"> </div>
+      <div class="r-h-mid"> </div>
+      <div class="r-h-right"> </div>
+      </div>
+    </div>
+  </div>
+</div>
