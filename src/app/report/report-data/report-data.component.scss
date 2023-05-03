@@ -1,0 +1,81 @@
+@mixin font-title{
+  font-weight: bold;
+  font-size: 17px;
+  text-decoration-color: black;
+  background-color: lightgray;
+}
+
+.r-grid {
+  display: grid;
+}
+
+.r-h-left .r-h-mid .r-h-right {
+  grid-column: 1;
+}
+
+.r-header {
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  grid-template-rows: 30px;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.r-body-top {
+  display: grid;
+  grid-template-columns: 24% 38% 38%;
+  grid-template-rows: 150px;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.r-h-mid span {
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.r-h-text {
+@include font-title();
+  border: 1px solid lightgray;
+  padding: 2px 5px;
+  width: 70px;
+  display: inline-block;
+  text-align: center;
+}
+
+table {
+
+  border-collapse: collapse;
+  td,
+  th {
+    border: 1px solid #ddd;
+  }
+}
+
+.td-title{
+  @include font-title();
+  width: 100px;
+}
+
+.td-values{
+  width: 100px;
+}
+
+.r-body-mid{
+  display: grid;
+  grid-template-columns: 15% 6% 15% 15% 49%;
+  grid-template-rows: 150px 150px;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.r-bm-box1{
+grid-column-start: 1;
+}
+
+.r-bm-box2{
+  grid-column-start: 2;
+  grid-column-end: 4;
+
+  }
+

@@ -27,6 +27,14 @@ import { ReportComponent } from './report/report.component';
 import { DropDownListModule } from "@progress/kendo-angular-dropdowns";
 import { LabelModule } from "@progress/kendo-angular-label";
 import { InputsModule } from "@progress/kendo-angular-inputs";
+import { ReportDataComponent } from './report/report-data/report-data.component';
+import { IndicatorsModule } from '@progress/kendo-angular-indicators';
+import { ProgressBarModule } from '@progress/kendo-angular-progressbar';
+import { MachineErrorComponent } from './report/report-data/machine-error/machine-error.component';
+
+
+
+
 
 @NgModule({
   declarations: [
@@ -35,6 +43,8 @@ import { InputsModule } from "@progress/kendo-angular-inputs";
     DashboardComponent,
     TestGridComponent,
     ReportComponent,
+    ReportDataComponent,
+    MachineErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +67,9 @@ import { InputsModule } from "@progress/kendo-angular-inputs";
     HttpClientModule,
     DropDownListModule,
     LabelModule,
-    InputsModule
+    InputsModule,
+    IndicatorsModule,
+    ProgressBarModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en' },

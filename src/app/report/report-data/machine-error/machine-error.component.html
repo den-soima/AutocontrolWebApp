@@ -1,0 +1,17 @@
+<table>
+  <tr>
+    <th></th>
+    <th>Eficiencia</th>
+    <th>Velocidad</th>
+    <th>Paros</th>
+  </tr>
+<tr *ngFor="let item of this.machineError; index as i">
+  <td [ngStyle]="{'background-color': item?.colorCode}" >
+    {{item?.szText}}
+  </td>
+  <td>{{item?.efficiency}}</td>
+  <td>{{item?.speed}}</td>
+  <td>{{item?.nError}}</td>
+</tr>
+</table>
+

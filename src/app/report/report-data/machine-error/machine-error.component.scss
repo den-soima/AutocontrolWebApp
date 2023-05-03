@@ -1,0 +1,19 @@
+@mixin font-title{
+  font-weight: bold;
+  font-size: 17px;
+  text-decoration-color: black;
+
+}
+
+table {
+  border-collapse: collapse;
+  td,tr{
+    border: 1px solid #ddd;
+  }
+}
+
+
+th{
+  @include font-title();
+  background-color: lightgray;
+}

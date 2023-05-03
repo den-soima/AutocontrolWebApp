@@ -1,5 +1,6 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { TreeViewModule } from '@progress/kendo-angular-treeview';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
@@ -8,5 +9,5 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
+platformBrowserDynamic().bootstrapModule(AppModule, {preserveWhitespaces: true})
   .catch(err => console.error(err));

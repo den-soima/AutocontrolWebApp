@@ -1,11 +1,17 @@
 <div class="container">
   <div class="gridTitle">Report</div>
-  <div class="userTable">
-    <div class="selectionBar">
-      <div class="component-container">
-          <kendo-label text="Report line:">
+  <div class="k-content">
+    <!-- <div class="r-spinner">
 
+        <div *ngIf="true" [pLoadingSpinner]="true"></div>
+
+    </div> -->
+    <div *ngIf="true" class="userTable">
+      <div class="selectionBar">
+        <div class="component-container">
+          <kendo-label text="Report line:">
             <kendo-dropdownlist
+              [disabled]="!linesLoaded"
               [data]="reportLines"
               textField="lineName"
               valueField="lineLink"
@@ -15,18 +21,32 @@
               ngDefaultControl
             >
             </kendo-dropdownlist>
-
           </kendo-label>
-          <p>
-            Line Link: {{ selectedLine.lineLink }}, Line name:
-            {{ selectedLine.lineName }}
-          </p>
+          <span *ngIf="linesLoaded">
+            <button kendoButton [disabled]="!lineSelected" (click)="this.loadData()">
+              <kendo-loader *ngIf="!linesLoaded" size="small"></kendo-loader>
+              {{ buttonText }}
+            </button>
+            <kendo-label text="Loading time:">
+              <kendo-textbox> 30S </kendo-textbox>
+            </kendo-label>
+            <kendo-label text="Loading progress:">
+              <kendo-chunkprogressbar
+                [chunkCount]="7"
+                [min]="0"
+                [max]="7"
+                [indeterminete]="false"
+                [value]="reporDataLoadingStatus.loadProgress"
+                [style.width.px]="300"
+                ngDefaultControl
+              >
+              </kendo-chunkprogressbar>
+            </kendo-label>
+          </span>
+        </div>
       </div>
-      <div class="k-grid-layout r-header">
-      <div class="r-h-left"> </div>
-      <div class="r-h-mid"> </div>
-      <div class="r-h-right"> </div>
-      </div>
+      <app-report-data [reportData]="reportData">
+      </app-report-data>
     </div>
   </div>
 </div>

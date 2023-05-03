@@ -1,3 +1,8 @@
+.container{
+  display: grid;
+  width: 100%;
+}
+
 .gridTitle {
   font-weight: 700;
   font-size: larger;
@@ -9,3 +14,9 @@
   width: 100%;
 }
 
+.r-spinner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
