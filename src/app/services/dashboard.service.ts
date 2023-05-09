@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { dashboardData } from 'src/dashboardData';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { DashboardData } from '../interfaces/dashboard.interface';
 
 @Injectable({
@@ -7,11 +9,11 @@ import { DashboardData } from '../interfaces/dashboard.interface';
 })
 export class DashboardService {
 
-  constructor() { }
+  private baseURL = environment.apiUrl;
 
-  getData() : DashboardData []{
+  constructor(private http: HttpClient) {}
 
-
-    return dashboardData;
+  getData(): Observable<DashboardData[]> {
+    return this.http.get<DashboardData[]>(`${this.baseURL}/dashboard`);
   }
 }

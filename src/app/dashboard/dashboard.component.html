@@ -4,128 +4,157 @@
     <kendo-grid
       [kendoGridBinding]="dashboardData"
       [selectable]="false"
-      [pageSize]="10"
-      [pageable]="true"
+      [pageSize]="8"
+      [pageable]="false"
       [sortable]="true"
       [columnMenu]="false"
       [filterable]="false"
+      id="dashboard-grid"
       #grid
     >
-      <kendo-grid-column field="Line" title="Line"> </kendo-grid-column>
-      <kendo-grid-column field="Nominal" title="Nominal"> </kendo-grid-column>
-      <kendo-grid-column field="Produced" title="Produced">
-        <ng-template kendoGridCellTemplate let-dataItem>
-          {{ formatThousand(dataItem.Produced) }}
-        </ng-template>
-      </kendo-grid-column>
-      <kendo-grid-column field="Inspectores.Vacio" title="Vacio" [width]="50">
-      </kendo-grid-column>
       <kendo-grid-column
-        field="Inspectores.Lieno"
-        title="Lieno"
-        [width]="50"
-      ></kendo-grid-column>
-      <kendo-grid-column field="Estimated" title="Estimated">
+        field="szMachine"
+        title="Line"
+        [headerStyle]="{}"
+      >
+      </kendo-grid-column>
+      <kendo-grid-column field="nRatedCapacity" title="Nominal">
         <ng-template kendoGridCellTemplate let-dataItem>
-          {{ formatThousand(dataItem.Estimated) }}
+          {{ formatNumber(dataItem.nRatedCapacity) }}
         </ng-template>
       </kendo-grid-column>
-      <kendo-grid-column field="TankActual" title="Tank actual">
+      <kendo-grid-column field="goodQty" title="Produccion">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ formatNumber(dataItem.goodQty) }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="emptyInspector" title="Vacio">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.emptyInspector > 0 ? dataItem.emptyInspector : "" }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="fullInspector" title="Lieno">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.fullInspector > 0 ? dataItem.fullInspector : "" }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="estimated" title="Estimated">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{
+            formatNumber(
+              dataItem.goodQty / dataItem.ratioOfCurrentShiftDuration
+            )
+          }}
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column field="nTank1" title="Tanque actual">
         <ng-template kendoGridCellTemplate let-dataItem>
           <div class="tankColumn">
             <div
               class="level"
-              [style.height]="levelCalculation(dataItem.TankActual.Volume)"
+              [style.height]="levelCalculation(dataItem.nVolTank1)"
             ></div>
             <div class="splittedCell">
-              {{ "BBT - " + dataItem.TankActual.Number }}
+              {{ "BBT - " + dataItem.nTank1 }}
             </div>
             <div class="splittedCell">
-              {{ dataItem.TankActual.Volume + " hl" }}
+              {{ dataItem.nVolTank1 + " hl" }}
             </div>
           </div>
-        </ng-template>
-      </kendo-grid-column>
-      <kendo-grid-column field="TankInQueue" title="Tanque en cola">
-        <ng-template kendoGridCellTemplate let-dataItem>
-          <div class="tankColumn" *ngIf="dataItem.TankInQueue.Number">
-            <div
-              class="level"
-              [style.height]="levelCalculation(dataItem.TankInQueue.Volume)"
-            ></div>
-            <div class="splittedCell">
-              {{ "BBT - " + dataItem.TankInQueue.Number }}
-            </div>
-            <div class="splittedCell">
-              {{ dataItem.TankInQueue.Volume + " hl" }}
-            </div>
-          </div>
-        </ng-template>
-      </kendo-grid-column>
-      <kendo-grid-column field="RatioAqua" title="Ratio Aqua" [style]="{'text-align': 'center'}">
-        <ng-template kendoGridCellTemplate let-dataItem>
-          {{ dataItem.RatioAqua > 0 ? dataItem.RatioAqua + "%" : "" }}
         </ng-template>
       </kendo-grid-column>
 
-      <kendo-grid-column field="EficienciaTiempo" title="Eficiencia">
+      <kendo-grid-column field="nTank2" title="Tanque en cola" [style]="{'text-align':'center'}">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.nTank2 > 0 ? dataItem.nTank2 : "" }}
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column
+        field="RatioAqua"
+        title="Ratio Aqua"
+        [style]="{ 'text-align': 'center' }"
+      >
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ waterRate(dataItem.waterRate) }}
+        </ng-template>
+      </kendo-grid-column>
+
+      <kendo-grid-column field="eficienciaTiempo" title="Eficiencia">
         <ng-template kendoGridCellTemplate let-dataItem>
           <div class="progressCircular">
             <div
               role="progressbar"
-              [attr.aria-valuenow]="dataItem.EficienciaTiempo"
+              [attr.aria-valuenow]="dataItem.nShiftPercent"
               aria-valuemin="0"
               aria-valuemax="100"
-              style="--value: {{ dataItem.EficienciaTiempo }}"
+              style="--value: {{ shiftPercent(dataItem.nShiftPercent) }}"
             ></div>
           </div>
+          <!-- <div>
+            <kendo-arcgauge [value]="gaugeValue"></kendo-arcgauge>
+          </div> -->
         </ng-template>
       </kendo-grid-column>
 
-      <kendo-grid-column field="Ranking" title="Ranking">
+      <kendo-grid-column field="nDataXLinkLine" title="Ranking">
         <ng-template kendoGridCellTemplate let-dataItem>
           <div class="imageContainer">
             <img
-              src="{{ defineRankImage(dataItem.Ranking) }}"
+              src="{{ defineRankImage(dataItem.nDataXLinkLine) }}"
               class="rankImage"
             />
           </div>
         </ng-template>
       </kendo-grid-column>
 
-      <kendo-grid-column field="ProductionTime" title="Production time" [style]="{'text-align': 'center'}">
+      <kendo-grid-column
+        field="secProductionTime"
+        title="Tiempo de Produccion"
+        [style]="{ 'text-align': 'center' }"
+        [width]="170"
+      >
         <ng-template kendoGridCellTemplate let-dataItem>
-          {{ formatTimeDuration(dataItem.ProductionTime) }}
+          {{ formatTimeDuration(dataItem.secProductionTime) }}
         </ng-template>
       </kendo-grid-column>
 
-      <kendo-grid-column field="Status" title="Status" [width]="170">
+      <kendo-grid-column field="nDataXLinkLine" title="Status"
+      [width]="170"
+      [style]="{'text-align':'center'}"
+      >
         <ng-template kendoGridCellTemplate let-dataItem>
           <div class="statusContainer">
             <div
               class="statusField"
               [style.backgroundColor]="
-                defineStatusColor(dataItem.Status.Phase1)
+                defineStatusColor(dataItem.nDataXLinkLine, 1)
               "
             >
               <span>
-                {{ defineStatusText(dataItem.Status.Phase1) }}
+                {{ defineStatusText(dataItem.nDataXLinkLine, 1) }}
               </span>
             </div>
 
             <div
               class="statusField"
               [style.backgroundColor]="
-                defineStatusColor(dataItem.Status.Phase2)
+                defineStatusColor(dataItem.nDataXLinkLine, 2)
               "
             >
               <span>
-                {{ defineStatusText(dataItem.Status.Phase2) }}
+                {{ defineStatusText(dataItem.nDataXLinkLine, 2) }}
               </span>
             </div>
           </div>
-        </ng-template> </kendo-grid-column
-      >s
+        </ng-template>
+      </kendo-grid-column>
     </kendo-grid>
+  </div>
+  <div class="dashboard-footer">
+    <div class="d-f-left">Comienzo:  </div>
+    <div class="d-f-mid">Fin: {{timeNow}}</div>
+    <div class="d-f-right">Desde comienzo del turno: </div>
   </div>
 </div>

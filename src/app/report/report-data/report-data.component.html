@@ -1,55 +1,159 @@
 <div class="r-grid">
-  <div class="r-header">
-    <div class="r-h-left">
-      <span class="r-h-text"> Fecha </span>
-      <span>
-        {{ this.header.actualDate }}
-      </span>
+  <app-report-header [data]="this.reportData?.header">
+
+  </app-report-header>
+  <div class="r-body">
+    <div class="r-b-box1">
+      <table>
+        <tr>
+          <td class="td-title">Nominal</td>
+          <td class="td-values">
+            {{ this.reportData?.productionInfo?.nNominalProduction }}
+            {{this.reportData?.productionInfo?.capacityUnit}}
+          </td>
+          <td class="td-values-span" rowspan="4">
+            {{ this.reportData?.productionInfo?.rShiftPercentage?.toPrecision(2) }} %
+          </td>
+        </tr>
+        <tr>
+          <td rowspan="2" class="td-title">Producido</td>
+          <td class="td-values">
+            {{ this.reportData?.productionInfo?.actualProduction}}
+            {{this.reportData?.productionInfo?.formatUnit}}
+          </td>
+        </tr>
+        <tr>
+          <td class="td-values">
+            {{ this.reportData?.productionInfo?.actualProductionCaj }}
+            {{this.reportData?.productionInfo?.skuUnit}}
+          </td>
+        </tr>
+        <tr>
+          <td class="td-title">Estimado</td>
+          <td class="td-values">
+            {{ this.reportData?.productionInfo?.nNominalProduction }}
+            {{this.reportData?.productionInfo?.formatUnit}}
+          </td>
+        </tr>
+      </table>
     </div>
-    <div class="r-h-mid">
-      <span class="r-h-title"> Supervision {{ this.header.lineName }}</span>
+    <div class="r-b-box2">
+      <app-machine-error
+        [data]="this.reportData?.machineError"
+      ></app-machine-error>
     </div>
-    <div class="r-h-right">
-      <span class="r-h-text">Hora</span>
-      <span> {{ this.header.actualTime }}</span>
+    <div class="r-b-box3">
+      <app-machine-error
+        [data]="this.reportData?.machineError2"
+      ></app-machine-error>
+    </div>
+    <div class="r-b-box4">
+      <table>
+        <tr>
+          <td class="td-title">UP</td>
+          <td class="td-values td-values-ar">
+            {{ this.reportData?.productionInfo?.uP }} UP
+          </td>
+        </tr>
+        <tr>
+          <td class="td-title">CO2</td>
+          <td class="td-values td-values-ar">
+            {{ this.reportData?.productionInfo?.cO2?.toPrecision(2) }} g/L
+          </td>
+        </tr>
+        <tr>
+          <td class="td-title">O2</td>
+          <td class="td-values td-values-ar">
+            {{ this.reportData?.productionInfo?.o2?.toPrecision(1) }} mg/L
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="r-b-box5">
+      <app-states-graph [data]="this.statesGraphData1"></app-states-graph>
+      <app-states-graph [data]="this.statesGraphData2"></app-states-graph>
+    </div>
+    <div class="r-b-box6">
+      <app-efficiency [data]="this.reportData?.efficiency"></app-efficiency>
+    </div>
+    <div class="r-b-box7">
+      <table>
+        <tr>
+          <th colspan="2">Rechazos</th>
+          <th>Ultima hora</th>
+        </tr>
+
+        <tr>
+          <td class="td-title">Vacio</td>
+          <td class="td-values td-values-ar">{{ this.reportData?.productionInfo?.vacio }} %</td>
+          <td class="td-values td-values-ar">{{ this.reportData?.productionInfo?.vacio1h }} %</td>
+        </tr>
+        <tr>
+          <td class="td-title">Lienadora</td>
+          <td class="td-values td-values-ar">
+            {{ this.reportData?.productionInfo?.llenadora }} %
+          </td>
+          <td class="td-values td-values-ar">
+            {{ this.reportData?.productionInfo?.llenadora1h }} %
+          </td>
+        </tr>
+        <tr>
+          <td class="td-title">Lleno</td>
+          <td class="td-values td-values-ar">
+            {{ this.reportData?.productionInfo?.lleno }} %
+          </td>
+          <td class="td-values td-values-ar">
+            {{ this.reportData?.productionInfo?.lleno1h }} %
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="r-b-box8">
+      <table>
+        <tr>
+          <th colspan="2">Agua</th>
+        </tr>
+        <tr>
+          <td class="td-title">Balanda</td>
+          <td class="td-values td-values-ar">{{ this.reportData?.productionInfo?.aguaBlanda }} m3</td>
+        </tr>
+        <tr>
+          <td class="td-title">Fria</td>
+          <td class="td-values td-values-ar">
+            {{ this.reportData?.productionInfo?.aguaFria }} m3
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="r-b-box9">
+      <table>
+        <tr>
+          <td class="td-title">BBT</td>
+          <td class="td-values">
+            {{ this.reportData?.productionInfo?.bbt }}
+          </td>
+        </tr>
+        <tr>
+          <td class="td-title">Semana</td>
+          <td class="td-values">
+            {{ this.reportData?.productionInfo?.semana }}
+          </td>
+        </tr>
+        <tr>
+          <td class="td-title">Turno</td>
+          <td class="td-values">
+            {{ this.reportData?.productionInfo?.turno }}
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
-  <div class="r-body-top">
-    <table>
-      <tr>
-        <td class="td-title">Nominal</td>
-        <td  >
-          {{ this.reportData?.productionInfo?.nNominalProduction }}
-        </td>
-        <td class="td-values" rowspan="4">
-          {{ this.reportData?.productionInfo?.rShiftPercentage }} %
-        </td>
-      </tr>
-      <tr>
-        <td rowspan="2" class="td-title">Producido</td>
-        <td class="td-values">{{ this.reportData?.productionInfo?.ActualProduction }} Bot</td>
-      </tr>
-      <tr>
-        <td class="td-values">
-          {{ this.reportData?.productionInfo?.ActualProductionCaj }} Cajas
-        </td>
-      </tr>
-      <tr>
-        <td class="td-title">Estimado</td>
-        <td class="td-values"> {{ this.reportData?.productionInfo?.nNominalProduction }} </td>
-      </tr>
-    </table>
-    <app-machine-error [data]="this.reportData?.machineError"></app-machine-error>
-    <app-machine-error [data]="this.reportData?.machineError2"></app-machine-error>
-  </div>
-  <div class="r-body-mid"></div>
-  <div class="r-body-bot"></div>
   <div class="r-footer">
     <kendo-grid
       [kendoGridBinding]="this.errorList"
       [selectable]="false"
       [pageSize]="5"
-      [pageable]="true"
+      [pageable]="false"
       [sortable]="true"
       [columnMenu]="false"
       [filterable]="false"

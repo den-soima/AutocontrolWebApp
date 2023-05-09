@@ -13,6 +13,7 @@
             <kendo-dropdownlist
               [disabled]="!linesLoaded"
               [data]="reportLines"
+              [loading]="!linesLoaded"
               textField="lineName"
               valueField="lineLink"
               placeholder="Select line..."
@@ -22,31 +23,31 @@
             >
             </kendo-dropdownlist>
           </kendo-label>
-          <span *ngIf="linesLoaded">
-            <button kendoButton [disabled]="!lineSelected" (click)="this.loadData()">
-              <kendo-loader *ngIf="!linesLoaded" size="small"></kendo-loader>
-              {{ buttonText }}
-            </button>
-            <kendo-label text="Loading time:">
-              <kendo-textbox> 30S </kendo-textbox>
-            </kendo-label>
-            <kendo-label text="Loading progress:">
-              <kendo-chunkprogressbar
-                [chunkCount]="7"
-                [min]="0"
-                [max]="7"
-                [indeterminete]="false"
-                [value]="reporDataLoadingStatus.loadProgress"
-                [style.width.px]="300"
-                ngDefaultControl
-              >
-              </kendo-chunkprogressbar>
-            </kendo-label>
-          </span>
+
+          <button
+            kendoButton
+            class="k-l-btn"
+            [disabled]="!loadButtonEnable"
+            (click)="this.loadData()"
+          >
+            <kendo-loader *ngIf="true" size="small"></kendo-loader>
+            {{ buttonText }}
+          </button>
+          <!-- <kendo-label class="k-l-prgss" text="Loading progress:">
+            <kendo-chunkprogressbar
+              [chunkCount]="7"
+              [min]="0"
+              [max]="7"
+              [indeterminete]="false"
+              [value]="reporDataLoadingStatus.loadProgress"
+              [style.width.px]="300"
+              ngDefaultControl
+            >
+            </kendo-chunkprogressbar>
+          </kendo-label> -->
         </div>
       </div>
-      <app-report-data [reportData]="reportData">
-      </app-report-data>
+      <app-report-data [reportData]="reportData"> </app-report-data>
     </div>
   </div>
 </div>

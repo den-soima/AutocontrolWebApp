@@ -11,10 +11,10 @@ export interface ReportHeader {
 }
 
 export interface ReportEfficiency {
-  HoursAgo: number;
-  HourRecorded: number;
-  PercEff: number;
-  PercEffAcumulado: number;
+  hoursAgo: number;
+  hourRecorded: number;
+  percEff: number;
+  percEffAcumulado: number;
 }
 
 export interface ReportErrorList {
@@ -34,36 +34,40 @@ export interface ReportMachineError {
 }
 
 export interface ReportStatesGraph {
-  Machine: string;
+  machine: string;
   nTime: number;
-  ColorCode: string;
+  colorCode: string;
   pStateNumber: number;
   bProductive: number;
-  pSortOrder: number;
+  sortOrder: number;
 }
 
 export interface ReportProductionInfo {
   nRatedCapacity: number;
   nNominalProduction: number;
   rShiftPercentage: number;
-  ActualProductionCaj: number;
-  ActualProduction: number;
-  ActualProduction1h: number;
-  RatioOfCurrentShiftDuration: number;
-  Vacio: number;
-  Llenadora: number;
-  Lleno: number;
-  Vacio1h: number;
-  Llenadora1h: number;
-  Lleno1h: number;
-  UP: number;
-  O2: number;
-  CO2: number;
-  AguaBlanda: number;
-  AguaFría: number;
-  FormatUnit: string;
-  CapacityUnit: string;
-  SKUUnit: string;
+  actualProductionCaj: number;
+  actualProduction: number;
+  actualProduction1h: number;
+  ratioOfCurrentShiftDuration: number;
+  vacio: number;
+  llenadora: number;
+  lleno: number;
+  vacio1h: number;
+  llenadora1h: number;
+  lleno1h: number;
+  uP: number;
+  o2: number;
+  cO2: number;
+  aguaBlanda: number;
+  aguaFria: number;
+  formatUnit: string;
+  capacityUnit: string;
+  skuUnit: string;
+  bbt: number;
+  semana: number;
+  turno: number;
+
 }
 
 export interface ReportData {

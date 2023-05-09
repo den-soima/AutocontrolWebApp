@@ -16,6 +16,8 @@ import {
   LoaderType,
   LoaderSize,
 } from '@progress/kendo-angular-indicators';
+import { catchError, Observable, throwError } from 'rxjs';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-report',
@@ -26,7 +28,7 @@ import {
 export class ReportComponent implements OnInit {
   reportLines: ReportLine[] = [];
   selectedLine: ReportLine = { lineLink: -1, lineName: '' };
-  lineSelected: boolean = false;
+  loadButtonEnable: boolean = false;
   linesLoaded: boolean = false;
   buttonText: string = 'Load data';
   reporDataLoadingStatus: ReporDataLoadingStatus = {
@@ -58,6 +60,10 @@ export class ReportComponent implements OnInit {
       this.reportLines = data;
       this.linesLoaded = data.length > 1;
     });
+
+    //  setTimeout(() => {
+    //    this.ngOnInit();
+    //  }, 10000 * 60);
   }
 
   public valueChange(value: ReportLine): void {
@@ -65,7 +71,7 @@ export class ReportComponent implements OnInit {
 
     this.selectedLine = value;
     this.reporDataLoadingStatus.dataLoaded = false;
-    this.lineSelected = value.lineLink > 0;
+    this.loadButtonEnable = value.lineLink > 0;
     //this.loadData();
   }
 
@@ -78,67 +84,100 @@ export class ReportComponent implements OnInit {
     this.loadStatesGraph(this.selectedLine.lineLink);
     this.loadEfficiency(this.selectedLine.lineLink);
     this.loadErroList(this.selectedLine.lineLink);
+
+    this.buttonText = 'Loading';
+    this.loadButtonEnable = false;
   }
 
   loadHeader(lineLink: number) {
-    this.reportService.getHeader(lineLink).subscribe((data: ReportHeader[]) => {
-      this.reportHeader = data[0];
-      this.dataLoaderChecker('header');
-    });
+    this.reportService.getHeader(lineLink).subscribe(
+      (data: ReportHeader[]) => {
+        this.reportHeader = data[0];
+        this.dataLoaderChecker('header');
+      },
+      (error) => {
+        console.log(error);
+        this.dataLoaderChecker('header');
+      }
+    );
   }
 
   loadProductionInfo(lineLink: number) {
-    this.reportService
-      .getProductionInfo(lineLink)
-      .subscribe((data: ReportProductionInfo[]) => {
+    this.reportService.getProductionInfo(lineLink).subscribe(
+      (data: ReportProductionInfo[]) => {
         this.reportProductionInfo = data[0];
         this.dataLoaderChecker('productionInfo');
-      });
+      },
+      (error) => {
+        console.log(error);
+        this.dataLoaderChecker('productionInfo');
+      }
+    );
   }
 
   loadMachineError(lineLink: number) {
-    this.reportService
-      .getMachineError(lineLink)
-      .subscribe((data: ReportMachineError[]) => {
+    this.reportService.getMachineError(lineLink).subscribe(
+      (data: ReportMachineError[]) => {
         this.reportMachineError = data;
         this.dataLoaderChecker('machineError');
-      });
+      },
+      (error) => {
+        console.log(error);
+        this.dataLoaderChecker('machineError');
+      }
+    );
   }
 
   loadMachineError2(lineLink: number) {
-    this.reportService
-      .getMachineErro2(lineLink)
-      .subscribe((data: ReportMachineError[]) => {
+    this.reportService.getMachineErro2(lineLink).subscribe(
+      (data: ReportMachineError[]) => {
         this.reportMachineError2 = data;
         this.dataLoaderChecker('machineError2');
-      });
+      },
+      (error) => {
+        console.log(error);
+        this.dataLoaderChecker('machineError2');
+      }
+    );
   }
 
   loadStatesGraph(lineLink: number) {
-    this.reportService
-      .getStatesGraph(lineLink)
-      .subscribe((data: ReportStatesGraph[]) => {
+    this.reportService.getStatesGraph(lineLink).subscribe(
+      (data: ReportStatesGraph[]) => {
         this.reportStatesGraph = data;
         this.dataLoaderChecker('statesGraph');
-      });
+      },
+      (error) => {
+        console.log(error);
+        this.dataLoaderChecker('statesGraph');
+      }
+    );
   }
 
   loadEfficiency(lineLink: number) {
-    this.reportService
-      .getEfficiency(lineLink)
-      .subscribe((data: ReportEfficiency[]) => {
+    this.reportService.getEfficiency(lineLink).subscribe(
+      (data: ReportEfficiency[]) => {
         this.reportEfficiency = data;
         this.dataLoaderChecker('efficiency');
-      });
+      },
+      (error) => {
+        console.log(error);
+        this.dataLoaderChecker('efficiency');
+      }
+    );
   }
 
   loadErroList(lineLink: number) {
-    this.reportService
-      .getErrorList(lineLink)
-      .subscribe((data: ReportErrorList[]) => {
+    this.reportService.getErrorList(lineLink).subscribe(
+      (data: ReportErrorList[]) => {
         this.reportErrorList = data;
         this.dataLoaderChecker('errorList');
-      });
+      },
+      (error) => {
+        console.log(error);
+        this.dataLoaderChecker('errorList');
+      }
+    );
   }
 
   dataLoaderChecker(property: string) {
@@ -146,7 +185,7 @@ export class ReportComponent implements OnInit {
 
     this.reporDataLoadingStatus.loadProgress += 1;
 
-    if (this.reporDataLoadingStatus.loadProgress==7) this.assignReportData();
+    if (this.reporDataLoadingStatus.loadProgress == 7) this.assignReportData();
   }
 
   assignReportData() {
@@ -161,5 +200,16 @@ export class ReportComponent implements OnInit {
     };
 
     this.reporDataLoadingStatus.dataLoaded = true;
+    this.buttonText = 'Reload data';
+    this.loadButtonEnable = true;
+
+    this.startTimer();
+  }
+
+  startTimer() {
+    console.log('Start timer');
+    setTimeout(() => {
+      this.loadData();
+    }, 60000);
   }
 }

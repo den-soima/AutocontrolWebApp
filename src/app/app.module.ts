@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 //   DIALOG_SERVICE,
 //   SdkServicesBaseModule,
 // } from '@proleit/sdk-services-base';
-import { LinesComponent } from './lines/lines.component';
+import { AutocontrolComponent } from './autocontrol/autocontrol.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SdkComponentsCommonModule } from '@proleit/sdk-components-common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,20 +31,26 @@ import { ReportDataComponent } from './report/report-data/report-data.component'
 import { IndicatorsModule } from '@progress/kendo-angular-indicators';
 import { ProgressBarModule } from '@progress/kendo-angular-progressbar';
 import { MachineErrorComponent } from './report/report-data/machine-error/machine-error.component';
-
-
-
+import { ChartsModule } from '@progress/kendo-angular-charts';
+import 'hammerjs';
+import { EfficiencyComponent } from './report/report-data/efficiency/efficiency.component';
+import { StatesGraphComponent } from './report/report-data/states-graph/states-graph.component';
+import { ReportHeaderComponent } from './report/report-data/report-header/report-header.component';
+import { GaugesModule } from '@progress/kendo-angular-gauges';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LinesComponent,
+    AutocontrolComponent,
     DashboardComponent,
     TestGridComponent,
     ReportComponent,
     ReportDataComponent,
     MachineErrorComponent,
+    EfficiencyComponent,
+    StatesGraphComponent,
+    ReportHeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,9 +73,11 @@ import { MachineErrorComponent } from './report/report-data/machine-error/machin
     HttpClientModule,
     DropDownListModule,
     LabelModule,
+    GaugesModule,
     InputsModule,
     IndicatorsModule,
     ProgressBarModule,
+    ChartsModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en' },

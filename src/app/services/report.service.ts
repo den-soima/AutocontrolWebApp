@@ -16,7 +16,7 @@ import {
   providedIn: 'root',
 })
 export class ReportService {
-  private baseURL = environment.apiUrl + '/autocontrol/api/v1/report';
+  private baseURL = environment.apiUrl + '/report';
 
   constructor(private http: HttpClient) {}
 

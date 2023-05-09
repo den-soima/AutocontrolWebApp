@@ -5,13 +5,12 @@
     <th>Velocidad</th>
     <th>Paros</th>
   </tr>
-<tr *ngFor="let item of this.machineError; index as i">
-  <td [ngStyle]="{'background-color': item?.colorCode}" >
-    {{item?.szText}}
-  </td>
-  <td>{{item?.efficiency}}</td>
-  <td>{{item?.speed}}</td>
-  <td>{{item?.nError}}</td>
-</tr>
+  <tr *ngFor="let item of this.data; index as i">
+    <td [ngStyle]="{ 'background-color': item?.colorCode }">
+      {{ item?.szText }}
+    </td>
+    <td class="td-values">{{ item?.efficiency?.toPrecision(3) }}</td>
+    <td class="td-values">{{ item?.speed }}</td>
+    <td class="td-values">{{ item?.nError }}</td>
+  </tr>
 </table>
-

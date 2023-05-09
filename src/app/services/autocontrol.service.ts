@@ -1,26 +1,20 @@
 import { Injectable } from '@angular/core';
-import { autocontrolData } from 'src/autocontrolData';
 import { IAutocontrol } from '../interfaces/autocontrol.interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AutocontrolCrudService {
-  private baseURL = 'https://esbsjum54:54321/AutocontrolModule/AutocontrolService/api/v1'
+  private baseURL = environment.apiUrl;
   autocontrol: IAutocontrol[];
   constructor(private http: HttpClient ) {
     this.autocontrol = [];
   }
 
   getAll(): Observable<any> {
-    return this.http.get(`${this.baseURL}/Autocontrol`)
-  }
+    return this.http.get(`${this.baseURL}/autocontrol`) }
 
-
-
-  refreshList() {
-    console.log('test rest Api');
-  }
 }

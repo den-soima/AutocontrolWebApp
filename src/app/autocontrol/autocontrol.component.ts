@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AutocontrolCrudService } from '../services/autocontrol-crud.service';
+import { AutocontrolCrudService } from '../services/autocontrol.service';
 import { IAutocontrol } from 'src/app/interfaces/autocontrol.interface';
 
 const createFormGroup = (autocontorolItem: IAutocontrol) =>
@@ -17,10 +17,10 @@ const createFormGroup = (autocontorolItem: IAutocontrol) =>
 
 @Component({
   selector: 'app-lines',
-  templateUrl: './lines.component.html',
-  styleUrls: ['./lines.component.scss'],
+  templateUrl: './autocontrol.component.html',
+  styleUrls: ['./autocontrol.component.scss'],
 })
-export class LinesComponent implements OnInit {
+export class AutocontrolComponent implements OnInit {
   public autocontrolData: IAutocontrol[] = [];
   public isNew: boolean = false;
   public active = false;

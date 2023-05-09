@@ -3,6 +3,7 @@ import {
   ReportData,
   ReportErrorList,
   ReportHeader,
+  ReportStatesGraph,
 } from 'src/app/interfaces/report.interface';
 
 @Component({
@@ -11,34 +12,37 @@ import {
   styleUrls: ['./report-data.component.scss'],
 })
 export class ReportDataComponent implements OnChanges, OnInit {
+
+  @Input() reportData: ReportData | undefined;
+
   errorList: ReportErrorList[] = [];
-  header = {
-    actualTime: '',
-    actualDate: '',
-    lineName: '',
-    nFillerMachine: 0,
-  };
+
+
+  statesGraphData1:ReportStatesGraph[] | undefined;
+  statesGraphData2:ReportStatesGraph[] | undefined;
 
   constructor() {}
 
   ngOnChanges(): void {
-    console.log('report-data component - onChanges');
 
     this.errorList = this.reportData?.errorList as ReportErrorList[];
-    this.header = {
-      actualTime: this.reportData?.header?.actualTime.toString().substring(11,19) as string,
-      actualDate: this.reportData?.header?.actualDate.toString().substring(0,10).replace("-","/").replace("-","/") as string,
-      lineName: this.reportData?.header?.lineName as string,
-      nFillerMachine: this.reportData?.header?.nFillerMachine as number,
-    };
+
+    let sortOrder = this.reportData?.statesGraph?.find((x) => x.sortOrder > 0)?.sortOrder || 0;
+
+    if (sortOrder > 0) {
+      this.statesGraphData1 = this.reportData?.statesGraph?.filter(
+        (x) => x.sortOrder === sortOrder
+      );
+
+      this.statesGraphData2 = this.reportData?.statesGraph?.filter(
+        (x) => x.sortOrder !== sortOrder
+      );
+    }
   }
 
   ngOnInit(): void {
-    console.log('report-data component - onInit');
-    // setTimeout(() => {
-    //   this.ngOnInit();
-    // }, 10000 * 10);
+
   }
 
-  @Input() reportData: ReportData | undefined;
+
 }

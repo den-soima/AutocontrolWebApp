@@ -1,41 +1,8 @@
-<kendo-grid [kendoGridBinding]="sampleProducts"
-[selectable]="{ mode: 'multiple' }"
-            [pageSize]="5"
-            [pageable]="true"
-            [columnMenu]="true"
-            [sortable]="true"
-            (edit)="editHandler($event)"
-            (add)="addHandler($event)"
-            (remove)="removeHandler($event)"
-            (save)="saveHandler($event)"
-            #grid>
-
-  <ng-template kendoGridToolbarTemplate [position]="'top'">
-    <button kendoButton [look]="'flat'" [icon]="'plus'" kendoGridAddCommand>Erstellen</button>
-    <button kendoButton [look]="'flat'" [icon]="'edit'" pGridButtonEdit></button>
-    <button kendoButton [look]="'flat'" [icon]="'save'" pGridButtonSave></button>
-    <button kendoButton [look]="'flat'" [icon]="'close-outline'" pGridButtonDiscard></button>
-    <button kendoButton [look]="'flat'" [icon]="'delete'" pGridButtonDelete></button>
-  </ng-template>
-
-  <kendo-grid-checkbox-column [showSelectAll]="true" [columnMenu]="false"></kendo-grid-checkbox-column>
-
-  <kendo-grid-column field="ProductID" title="ID"> </kendo-grid-column>
-
-  <kendo-grid-column field="ProductName" title="Name"> </kendo-grid-column>
-
-  <kendo-grid-column field="CategoryName" title="Category"> </kendo-grid-column>
-
-  <kendo-grid-column field="UnitPrice" title="Price"> </kendo-grid-column>
-
-  <kendo-grid-column field="UnitsInStock" title="In stock"> </kendo-grid-column>
-
-  <kendo-grid-column field="Discontinued" title="Discontinued">
-    <ng-template kendoGridCellTemplate let-dataItem>
-      <input type="checkbox" [(ngModel)]="dataItem.Discontinued" disabled />
-    </ng-template>
-    <ng-template kendoGridEditTemplate let-column="column" let-formGroup="formGroup">
-      <input type="checkbox">
-    </ng-template>
-  </kendo-grid-column>
-</kendo-grid>
+<div class="d-grid">
+ <div class="box1"> box 1 </div>
+ <div class="box2"> box 2 </div>
+ <div class="box3"> box 3 </div>
+ <div class="box4"> box 4 </div>
+ <div class="box5"> box 5 </div>
+ <div class="box6"> box 6 </div>
+</div>

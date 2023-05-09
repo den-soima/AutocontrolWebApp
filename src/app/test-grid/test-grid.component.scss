@@ -1,0 +1,30 @@
+.d-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.box1 {
+  background-color: aquamarine;
+}
+
+.box2 {
+  background-color: lightcoral;
+}
+
+.box3 {
+  background-color: lightgreen;
+}
+
+.box4 {
+  background-color: lightslategray;
+}
+
+.box5 {
+  background-color: lightskyblue;
+}
+
+.box6 {
+  background-color: yellowgreen;
+}

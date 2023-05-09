@@ -44,7 +44,7 @@
   text-align: center;
   font-weight: bold;
   overflow-wrap: break-word;
-  span{
+  span {
     display: inline-block;
     position: relative;
     padding: 25px 0;
@@ -57,24 +57,28 @@
   align-items: center;
 }
 
-.imageContainer{
+.imageContainer {
   display: flex;
   height: 100%;
   justify-content: center;
   align-items: center;
 }
-.rankImage{
+.rankImage {
   height: 50px;
   width: 50px;
 }
 
 @keyframes progress {
-  0% { --percentage: 0; }
-  100% { --percentage: var(--value); }
+  0% {
+    --percentage: 0;
+  }
+  100% {
+    --percentage: var(--value);
+  }
 }
 
 @property --percentage {
-  syntax: '<number>';
+  syntax: "<number>";
   inherits: true;
   initial-value: 0;
 }
@@ -102,7 +106,11 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: conic-gradient(from 0.75turn at 50% 100%, var(--primary) calc(var(--percentage) * 1% / 2), var(--secondary) calc(var(--percentage) * 1% / 2 + 0.1%));
+  background: conic-gradient(
+    from 0.75turn at 50% 100%,
+    var(--primary) calc(var(--percentage) * 1% / 2),
+    var(--secondary) calc(var(--percentage) * 1% / 2 + 0.1%)
+  );
   mask: radial-gradient(at 50% 100%, white 55%, transparent 55.5%);
   mask-mode: alpha;
   -webkit-mask: radial-gradient(at 50% 100%, #0000 55%, #000 55.5%);
@@ -123,4 +131,41 @@
   display: flex;
   place-items: center;
   background: transparent;
+}
+
+.statusClass {
+  width: 170px;
+}
+
+.k-cell-inner > .k-link {
+  justify-content: center;
+  text-align: center;
+}
+
+.dashboard-footer {
+  display: grid;
+  position: relative;
+  flex: 1;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 50px;
+  align-items: center;
+  vertical-align: middle;
+  grid-auto-flow: row;
+  div {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
+
+.d-f-left {
+  padding-left: 15px;
+}
+
+.d-f-mid {
+  padding-left: 15px;
+}
+
+.d-f-right {
+  padding-left: 15px;
 }

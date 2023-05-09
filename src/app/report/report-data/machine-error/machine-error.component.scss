@@ -1,17 +1,23 @@
 @mixin font-title{
   font-weight: bold;
-  font-size: 17px;
   text-decoration-color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
 
 }
 
 table {
   border-collapse: collapse;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
   td,tr{
     border: 1px solid #ddd;
   }
 }
 
+.td-values{
+  text-align: center
+}
 
 th{
   @include font-title();

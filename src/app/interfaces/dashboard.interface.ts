@@ -1,27 +1,28 @@
 export interface DashboardData {
-    Line: string,
-    Nominal: number,
-    Produced: number,
-    Inspectores: {
-      Vacio: number,
-      Lieno: number,
-    },
-    Estimated: number,
-    TankActual: {
-      Number: number,
-      Volume: number,
-    },
-    TankInQueue: {
-      Number: number,
-      Volume: number,
-    },
-    RatioAqua: number,
-    EficienciaTiempo: number,
-    Ranking: number,
-    ProductionTime: number,
-    Status: {
-      Phase1: number,
-      Phase2: number
-    },
-
+  topPercent: number;
+  nCurrentMachineState: number;
+  szCurrentMachineState: string;
+  szColorCurrentMachineState: string;
+  nCurrentMachineState2: number;
+  szCurrentMachineState2: number;
+  szColorCurrentMachineState2: string;
+  ratioOfCurrentShiftDuration: number;
+  nDataXLinkLine: number;
+  nShiftKey: number;
+  szMachine: string;
+  nShiftPercent: number;
+  nEstimatedShift: number;
+  nObjEff: number;
+  szCurrentOrder: string;
+  szFormat: string;
+  nRatedCapacity: number;
+  goodQty: number;
+  fullInspector: number;
+  emptyInspector: number;
+  waterQty: number;
+  nTank1: number;
+  nTank2: number;
+  nVolTank1: number;
+  waterRate: number;
+  secProductionTime: number;
 }
