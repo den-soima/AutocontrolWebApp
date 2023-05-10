@@ -22,4 +22,10 @@ table {
 th{
   @include font-title();
   background-color: lightgray;
+  padding: 0 5px;
+}
+
+.td-name{
+  min-width: 200px;
+  margin-left: 10px;
 }

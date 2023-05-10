@@ -6,15 +6,16 @@ import { ReportComponent } from './report/report.component';
 import { TestGridComponent } from './test-grid/test-grid.component';
 
 const routes: Routes = [
-  {path:'autocontrol', component: AutocontrolComponent},
-  {path:'dashboard', component: DashboardComponent},
-  {path:'testgrid', component: TestGridComponent},
-  {path:'report', component: ReportComponent},
-  {path:'**', redirectTo: 'lines'}
+  { path: 'autocontrol', component: AutocontrolComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'testgrid', component: TestGridComponent },
+  { path: 'report', component: ReportComponent },
+  { path: 'report/:id', component: ReportComponent },
+  { path: '**', redirectTo: 'dashboard' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

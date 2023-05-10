@@ -1,19 +1,22 @@
 .r-header {
   display: grid;
   grid-template-columns: 20% 40% 20% 20%;
-  grid-template-rows: 30px;
+  grid-template-rows: 20px;
 
   vertical-align: middle;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 14px;
   text-decoration-color: black;
   grid-auto-flow: row;
+
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .r-h-left, .r-h-mid, .r-h-right {
-
+  display: table;
   vertical-align: middle;
-  padding-left: 30px;
+  padding-left: 20%;
   line-height: 1;
 }
 
@@ -26,18 +29,22 @@
   border: 1px solid lightgray;
   padding: 2px 5px;
   width: 70px;
-  text-align: center;
+  vertical-align: middle;
   font-weight: bold;
   background-color: lightgray;
+  display: table-cell;
+  text-align: center;
 }
 
 .r-h-value{
-  border: 1px solid lightgray;
-  background-color: rgb(233, 233, 233);
-  display: inline-block;
   line-height: 1;
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 10px;
 }
 
 .r-h-title{
-  padding-left: 30px;
+  padding-left: 20%;
+  display: table-cell;
+  vertical-align: middle;
 }

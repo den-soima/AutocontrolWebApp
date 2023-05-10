@@ -14,10 +14,11 @@
       <kendo-chart-series-item
         *ngFor="let item of this.data; index as i"
         type="bar"
-        [stack]="true"
+        [stack]="{type: '100%'}"
         [data]="[item.nTime]"
         [color]="item.colorCode"
       >
+
       </kendo-chart-series-item>
     </kendo-chart-series>
   </kendo-chart>

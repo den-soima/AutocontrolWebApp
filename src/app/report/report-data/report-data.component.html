@@ -130,19 +130,19 @@
         <tr>
           <td class="td-title">BBT</td>
           <td class="td-values">
-            {{ this.reportData?.productionInfo?.bbt }}
+            {{ this.reportData?.productionInfo?.bbt }} HL
           </td>
         </tr>
         <tr>
           <td class="td-title">Semana</td>
           <td class="td-values">
-            {{ this.reportData?.productionInfo?.semana }}
+            {{ this.reportData?.productionInfo?.semana }} HL
           </td>
         </tr>
         <tr>
           <td class="td-title">Turno</td>
           <td class="td-values">
-            {{ this.reportData?.productionInfo?.turno }}
+            {{ this.reportData?.productionInfo?.turno }} HL
           </td>
         </tr>
       </table>
@@ -159,7 +159,7 @@
       [filterable]="false"
       #grid
     >
-      <kendo-grid-column field="machine" title="Machine" [width]="400">
+      <kendo-grid-column field="machine" title="Machine" [width]="300">
       </kendo-grid-column>
       <kendo-grid-column field="reason" title="Alarm"> </kendo-grid-column>
       <kendo-grid-column field="countError" title="Count" [width]="100">

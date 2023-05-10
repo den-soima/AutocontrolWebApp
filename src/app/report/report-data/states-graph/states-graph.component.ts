@@ -7,14 +7,20 @@ import { ReportStatesGraph } from 'src/app/interfaces/report.interface';
   styleUrls: ['./states-graph.component.scss'],
 })
 export class StatesGraphComponent implements OnInit, OnChanges {
+  machineName: string | undefined = 'default name 1';
 
-machineName: string | undefined = 'default name 1';
+  chartData = [
+    { nTime: 3800, colorCode: 'red' },
+    { nTime: 1000, colorCode: 'green' },
+    { nTime: 2000, colorCode: 'blue' },
+    { nTime: 200, colorCode: 'yellow' },
+    { nTime: 7000, colorCode: 'gray' },
+  ];
 
   constructor() {}
 
   ngOnChanges(): void {
     this.machineName = this.data?.find((x) => x.sortOrder > 0)?.machine;
-
   }
   ngOnInit(): void {}
 

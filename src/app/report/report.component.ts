@@ -18,6 +18,7 @@ import {
 } from '@progress/kendo-angular-indicators';
 import { catchError, Observable, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-report',
@@ -28,6 +29,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 export class ReportComponent implements OnInit {
   reportLines: ReportLine[] = [];
   selectedLine: ReportLine = { lineLink: -1, lineName: '' };
+  selectedLineByUrl: ReportLine | undefined;
   loadButtonEnable: boolean = false;
   linesLoaded: boolean = false;
   buttonText: string = 'Load data';
@@ -53,26 +55,29 @@ export class ReportComponent implements OnInit {
   reportEfficiency: ReportEfficiency[] | undefined;
   reportErrorList: ReportErrorList[] | undefined;
 
-  constructor(public reportService: ReportService) {}
+  // route
+  routeId: string | null = '';
+
+  constructor(public reportService: ReportService, private route: ActivatedRoute) {}
 
   ngOnInit() {
+
+    this.routeId = this.route.snapshot.paramMap.get('id');
     this.reportService.getLines().subscribe((data: ReportLine[]) => {
       this.reportLines = data;
+      this.selectedLineByUrl = this.reportLines.find(x=>x.lineName==this.routeId);
+      if (this.selectedLineByUrl !== undefined) this.valueChange(this.selectedLineByUrl);
       this.linesLoaded = data.length > 1;
     });
 
-    //  setTimeout(() => {
-    //    this.ngOnInit();
-    //  }, 10000 * 60);
   }
 
   public valueChange(value: ReportLine): void {
-    //if (this.selectedLine.lineLink == value.lineLink) return;
-
     this.selectedLine = value;
     this.reporDataLoadingStatus.dataLoaded = false;
     this.loadButtonEnable = value.lineLink > 0;
-    //this.loadData();
+
+    if (this.selectedLineByUrl !== undefined) this.loadData();
   }
 
   loadData() {

@@ -1,4 +1,4 @@
-<kendo-chart class="r-eff-chart">
+<kendo-chart class="r-eff-chart" [seriesColors]="seriesColors">
   <kendo-chart-title></kendo-chart-title>
   <kendo-chart-area [height]="290">
 
@@ -6,7 +6,7 @@
   <kendo-chart-value-axis>
     <kendo-chart-value-axis-item
       [min]="0"
-      [max]="100"
+      [max]="120"
     >
     </kendo-chart-value-axis-item>
   </kendo-chart-value-axis>
@@ -16,10 +16,14 @@
     >
     </kendo-chart-category-axis-item>
   </kendo-chart-category-axis>
+  <kendo-chart-tooltip [visible]="true" [format]="'{0}%'"></kendo-chart-tooltip>
+
   <kendo-chart-series>
     <kendo-chart-series-item type="line" [data]="seriesEff">
+      <kendo-chart-series-item-labels [visible]="true" [format]="'{0}%'" [color]="'#FF6666'"></kendo-chart-series-item-labels>
     </kendo-chart-series-item>
     <kendo-chart-series-item type="line" [data]="seriesEffAcumulado">
+      <!-- <kendo-chart-series-item-labels [visible]="true" [format]="'{0}%'" [color]="'#3399FF'"></kendo-chart-series-item-labels> -->
     </kendo-chart-series-item>
   </kendo-chart-series>
 </kendo-chart>

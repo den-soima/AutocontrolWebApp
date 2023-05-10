@@ -28,13 +28,14 @@ table {
 
 .td-title {
   @include font-title();
-  width: 100px;
+  width: 85px;
   padding-left: 3px;
 }
 
 .td-values {
   width: 100px;
   text-align: right;
+  padding-right: 3px;
 }
 .td-values-span{
   font-weight: bold;
@@ -47,8 +48,10 @@ table {
   display: grid;
   position: relative;
   flex: 1;
-  grid-template-columns: 14% 6% 14% 14% 12% 40%;
-  grid-template-rows: 150px 150px 150px;
+  grid-template-columns: 16% 6% 14% 14% 12% 38%;
+  // grid-template-rows: 180px 150px 150px;
+  grid-auto-rows: max-content;
+  row-gap: 15px;
   align-items: center;
   vertical-align: middle;
   grid-auto-flow: row;
@@ -62,11 +65,17 @@ table {
 .r-b-box2 {
   grid-column: 3 / span 3;
   grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .r-b-box3 {
   grid-column: 6;
   grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .r-b-box4 {
@@ -92,4 +101,8 @@ table {
 .r-b-box9 {
   grid-column: 4;
   grid-row: 3;
+}
+
+.r-footer{
+  margin-top: 15px;
 }
