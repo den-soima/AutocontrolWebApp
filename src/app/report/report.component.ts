@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ReportService } from '../services/report.service';
 import {
   ReportData,
@@ -11,13 +11,6 @@ import {
   ReportErrorList,
   ReporDataLoadingStatus,
 } from '../interfaces/report.interface';
-import {
-  LoaderThemeColor,
-  LoaderType,
-  LoaderSize,
-} from '@progress/kendo-angular-indicators';
-import { catchError, Observable, throwError } from 'rxjs';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -26,7 +19,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./report.component.scss'],
   providers: [ReportService],
 })
-export class ReportComponent implements OnInit {
+export class ReportComponent implements OnInit, OnDestroy {
   reportLines: ReportLine[] = [];
   selectedLine: ReportLine = { lineLink: -1, lineName: '' };
   selectedLineByUrl: ReportLine | undefined;
@@ -54,6 +47,7 @@ export class ReportComponent implements OnInit {
   reportStatesGraph: ReportStatesGraph[] | undefined;
   reportEfficiency: ReportEfficiency[] | undefined;
   reportErrorList: ReportErrorList[] | undefined;
+  public reloadInterval: null | ReturnType<typeof setInterval> = null;
 
   // route
   routeId: string | null = '';
@@ -70,8 +64,18 @@ export class ReportComponent implements OnInit {
       this.linesLoaded = data.length > 1;
     });
 
+    this.reloadInterval = setInterval(() => {
+      this.loadData();
+      console.log("Report Interval");
+    }, 60000);
   }
 
+  ngOnDestroy(): void {
+    if (this.reloadInterval){
+      clearInterval(this.reloadInterval)
+    console.log("Interval destoyed" + this.reloadInterval);
+    };
+  }
   public valueChange(value: ReportLine): void {
     this.selectedLine = value;
     this.reporDataLoadingStatus.dataLoaded = false;
@@ -207,14 +211,5 @@ export class ReportComponent implements OnInit {
     this.reporDataLoadingStatus.dataLoaded = true;
     this.buttonText = 'Reload data';
     this.loadButtonEnable = true;
-
-    this.startTimer();
-  }
-
-  startTimer() {
-    console.log('Start timer');
-    setTimeout(() => {
-      this.loadData();
-    }, 60000);
   }
 }

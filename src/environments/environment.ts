@@ -6,9 +6,9 @@ export const environment = {
   production: false,
   serverUrl: 'https://esbsjum54:8777',
   redirectUrl: 'http://localhost:4200',
-  apiUrl: 'https://esbsjum54:54321/lms/api/v1',
+  apiUrl: 'https://esbsjum54:54321/lmsmodule/lmsservice/api/v1',
   logoutUrl: 'https://esbsjum54:8777/webportal/home/logout',
-  clientId: 'AutocontrolApp',
+  clientId: 'UserFrontend',
   sdApi: 'infrastructure/api/ServiceDiscovery',
   moduleTechname: 'webortal',
   serviceTechname: 'iitgateway'

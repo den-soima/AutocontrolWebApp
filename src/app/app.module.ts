@@ -22,13 +22,11 @@ import { DialogModule, DialogService } from '@progress/kendo-angular-dialog';
 import { SdkComponentsValidationModule } from '@proleit/sdk-components-validation';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { SdkComponentsDateinputsModule } from '@proleit/sdk-components-dateinputs';
-import { TestGridComponent } from './test-grid/test-grid.component';
 import { ReportComponent } from './report/report.component';
 import { DropDownListModule } from "@progress/kendo-angular-dropdowns";
 import { LabelModule } from "@progress/kendo-angular-label";
 import { InputsModule } from "@progress/kendo-angular-inputs";
 import { ReportDataComponent } from './report/report-data/report-data.component';
-import { IndicatorsModule } from '@progress/kendo-angular-indicators';
 import { ProgressBarModule } from '@progress/kendo-angular-progressbar';
 import { MachineErrorComponent } from './report/report-data/machine-error/machine-error.component';
 import { ChartsModule } from '@progress/kendo-angular-charts';
@@ -36,7 +34,7 @@ import 'hammerjs';
 import { EfficiencyComponent } from './report/report-data/efficiency/efficiency.component';
 import { StatesGraphComponent } from './report/report-data/states-graph/states-graph.component';
 import { ReportHeaderComponent } from './report/report-data/report-header/report-header.component';
-import { GaugesModule } from '@progress/kendo-angular-gauges';
+
 
 
 @NgModule({
@@ -44,7 +42,6 @@ import { GaugesModule } from '@progress/kendo-angular-gauges';
     AppComponent,
     AutocontrolComponent,
     DashboardComponent,
-    TestGridComponent,
     ReportComponent,
     ReportDataComponent,
     MachineErrorComponent,
@@ -73,9 +70,7 @@ import { GaugesModule } from '@progress/kendo-angular-gauges';
     HttpClientModule,
     DropDownListModule,
     LabelModule,
-    GaugesModule,
     InputsModule,
-    IndicatorsModule,
     ProgressBarModule,
     ChartsModule
   ],

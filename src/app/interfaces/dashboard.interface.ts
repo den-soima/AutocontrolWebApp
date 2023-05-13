@@ -1,3 +1,5 @@
+import { Data } from '@angular/router';
+
 export interface DashboardData {
   topPercent: number;
   nCurrentMachineState: number;
@@ -25,4 +27,10 @@ export interface DashboardData {
   nVolTank1: number;
   waterRate: number;
   secProductionTime: number;
+}
+
+export interface DashboardHeader {
+  actualShift: Date;
+  actualTime: Date;
+  duration: Date;
 }

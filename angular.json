@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AutocontrolApp": {
+    "LmsModule": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/autocontrol-app",
+
+            "outputPath": "dist/lms-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -46,13 +47,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "3kb",
+                  "maximumError": "6kb"
                 }
               ],
               "fileReplacements": [
@@ -78,10 +79,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "AutocontrolApp:build:production"
+              "browserTarget": "LmsModule:build:production"
             },
             "development": {
-              "browserTarget": "AutocontrolApp:build:development"
+              "browserTarget": "LmsModule:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,7 +90,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AutocontrolApp:build"
+            "browserTarget": "LmsModule:build"
           }
         },
         "test": {
@@ -113,5 +114,5 @@
       }
     }
   },
-  "defaultProject": "AutocontrolApp"
+  "defaultProject": "LmsModule"
 }

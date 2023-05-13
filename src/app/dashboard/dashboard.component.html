@@ -12,11 +12,7 @@
       id="dashboard-grid"
       #grid
     >
-      <kendo-grid-column
-        field="szMachine"
-        title="Line"
-        [headerStyle]="{}"
-      >
+      <kendo-grid-column field="szMachine" title="Linea" [headerStyle]="{}">
       </kendo-grid-column>
       <kendo-grid-column field="nRatedCapacity" title="Nominal">
         <ng-template kendoGridCellTemplate let-dataItem>
@@ -38,7 +34,7 @@
           {{ dataItem.fullInspector > 0 ? dataItem.fullInspector : "" }}
         </ng-template>
       </kendo-grid-column>
-      <kendo-grid-column field="estimated" title="Estimated">
+      <kendo-grid-column field="estimated" title="Estimaccion">
         <ng-template kendoGridCellTemplate let-dataItem>
           {{
             formatNumber(
@@ -65,7 +61,11 @@
         </ng-template>
       </kendo-grid-column>
 
-      <kendo-grid-column field="nTank2" title="Tanque en cola" [style]="{'text-align':'center'}">
+      <kendo-grid-column
+        field="nTank2"
+        title="Tanque en cola"
+        [style]="{ 'text-align': 'center' }"
+      >
         <ng-template kendoGridCellTemplate let-dataItem>
           {{ dataItem.nTank2 > 0 ? dataItem.nTank2 : "" }}
         </ng-template>
@@ -120,32 +120,36 @@
         </ng-template>
       </kendo-grid-column>
 
-      <kendo-grid-column field="nDataXLinkLine" title="Status"
-      [width]="170"
-      [style]="{'text-align':'center'}"
+      <kendo-grid-column
+        field="nDataXLinkLine"
+        title="Estado Actual"
+        [width]="170"
+        [style]="{ 'text-align': 'center' }"
       >
         <ng-template kendoGridCellTemplate let-dataItem>
           <div class="statusContainer">
             <div
+              *ngIf="defineStatusText(dataItem.nDataXLinkLine, 1) != ''"
               class="statusField"
               [style.backgroundColor]="
                 defineStatusColor(dataItem.nDataXLinkLine, 1)
               "
             >
-              <span>
+              <div>
                 {{ defineStatusText(dataItem.nDataXLinkLine, 1) }}
-              </span>
+              </div>
             </div>
 
             <div
+              *ngIf="defineStatusText(dataItem.nDataXLinkLine, 2) != ''"
               class="statusField"
               [style.backgroundColor]="
                 defineStatusColor(dataItem.nDataXLinkLine, 2)
               "
             >
-              <span>
+              <div>
                 {{ defineStatusText(dataItem.nDataXLinkLine, 2) }}
-              </span>
+              </div>
             </div>
           </div>
         </ng-template>
@@ -153,8 +157,15 @@
     </kendo-grid>
   </div>
   <div class="dashboard-footer">
-    <div class="d-f-left">Comienzo:  </div>
-    <div class="d-f-mid">Fin: {{timeNow}}</div>
-    <div class="d-f-right">Desde comienzo del turno: </div>
+    <div class="d-f-left">
+      Comienzo: {{ formatHeaderDate(this.dashboardHeader?.actualShift) }}
+    </div>
+    <div class="d-f-mid">
+      Fin: {{ formatHeaderDate(this.dashboardHeader?.actualTime) }}
+    </div>
+    <div class="d-f-right">
+      Desde comienzo del turno:
+      {{ formatHeaderDuration(this.dashboardHeader?.duration) }}
+    </div>
   </div>
 </div>

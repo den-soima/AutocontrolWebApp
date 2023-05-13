@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { DashboardData } from '../interfaces/dashboard.interface';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  DashboardData,
+  DashboardHeader,
+} from '../interfaces/dashboard.interface';
 import { DashboardService } from '../services/dashboard.service';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import { Status } from '../enums/status.enum';
 import { RankImage } from '../enums/rank-image.enum';
 
 @Component({
@@ -10,41 +12,54 @@ import { RankImage } from '../enums/rank-image.enum';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   public dashboardData: DashboardData[] = [];
+  public dashboardHeader: DashboardHeader | undefined;
   public gaugeValue = 30;
-  public timeNow: string;
+  public reloadInterval: null | ReturnType<typeof setInterval> = null;
 
   constructor(
     private sanitizer: DomSanitizer,
     public dashboardService: DashboardService
-  ) {
-
-    this.timeNow = this.getDate();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loadData();
-  }
-
-  startTimer() {
-    console.log('Start timer');
-    setTimeout(() => {
+    this.reloadInterval = setInterval(() => {
       this.loadData();
+      console.log("Dashboard Interval");
     }, 30000);
+
+
   }
 
-  loadData() {
+  ngOnDestroy(): void {
+    if (this.reloadInterval){
+      clearInterval(this.reloadInterval)
+    console.log("Interval destoyed" + this.reloadInterval);
+    };
+  }
+
+   loadData() {
     this.dashboardService.getData().subscribe((data: DashboardData[]) => {
       this.dashboardData = data;
-      this.timeNow = this.getDate();
-      this.startTimer();
+    });
+
+    this.dashboardService.getHeader().subscribe((data: DashboardHeader[]) => {
+      this.dashboardHeader = data[0];
     });
   }
 
-  getDate():string{
-    let date = new Date()
-    return date.toLocaleDateString("es-ES") + ' ' + date.toLocaleTimeString("es-ES")
+  formatHeaderDate(value: any): string {
+    return value
+      ?.toString()
+      .substring(0, 19)
+      .replace('T', ' ')
+      .replaceAll('-', '.');
+  }
+
+  formatHeaderDuration(value: any): string {
+    return value?.toString().substring(11, 19);
   }
 
   formatThousand(value: any): string {
@@ -52,7 +67,7 @@ export class DashboardComponent implements OnInit {
   }
 
   levelCalculation(value: any) {
-    var level = (Number(value) / 2000) * 100 + '%';
+    var level = (Number(value) / 2100) * 100 + '%';
     return this.sanitizer.bypassSecurityTrustStyle(level);
   }
 
@@ -73,12 +88,14 @@ export class DashboardComponent implements OnInit {
     return value.toFixed(0);
   }
 
-  defineStatusText(value: any,  statusOrder: number) {
+  defineStatusText(value: any, statusOrder: number) {
     let record: DashboardData | undefined = this.dashboardData?.find(
       (x) => x.nDataXLinkLine == value
     );
 
-    return statusOrder == 1? record?.szCurrentMachineState: record?.szCurrentMachineState2;
+    return statusOrder == 1
+      ? record?.szCurrentMachineState
+      : record?.szCurrentMachineState2;
   }
 
   defineStatusColor(value: any, statusOrder: number) {
@@ -86,7 +103,9 @@ export class DashboardComponent implements OnInit {
       (x) => x.nDataXLinkLine == value
     );
 
-  return statusOrder == 1? record?.szColorCurrentMachineState: record?.szColorCurrentMachineState2;
+    return statusOrder == 1
+      ? record?.szColorCurrentMachineState
+      : record?.szColorCurrentMachineState2;
   }
 
   defineRankImage(value: any) {
@@ -102,6 +121,4 @@ export class DashboardComponent implements OnInit {
 
     return RankImage.Bicicleta;
   }
-
-
 }

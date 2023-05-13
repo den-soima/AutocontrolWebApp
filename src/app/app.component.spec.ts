@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'AutocontrolApp'`, () => {
+  it(`should have as title 'LmsModule'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('AutocontrolApp');
+    expect(app.title).toEqual('LmsModule');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('AutocontrolApp app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('LmsModule app is running!');
   });
 });
