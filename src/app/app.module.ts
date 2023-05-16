@@ -1,4 +1,5 @@
 import { LOCALE_ID, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
@@ -9,8 +10,8 @@ import { AppComponent } from './app.component';
 //   DIALOG_SERVICE,
 //   SdkServicesBaseModule,
 // } from '@proleit/sdk-services-base';
-import { AutocontrolComponent } from './autocontrol/autocontrol.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { AutocontrolComponent } from './components/autocontrol/autocontrol.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SdkComponentsCommonModule } from '@proleit/sdk-components-common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,18 +23,18 @@ import { DialogModule, DialogService } from '@progress/kendo-angular-dialog';
 import { SdkComponentsValidationModule } from '@proleit/sdk-components-validation';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { SdkComponentsDateinputsModule } from '@proleit/sdk-components-dateinputs';
-import { ReportComponent } from './report/report.component';
+import { ReportComponent } from './components/report/report.component';
 import { DropDownListModule } from "@progress/kendo-angular-dropdowns";
 import { LabelModule } from "@progress/kendo-angular-label";
 import { InputsModule } from "@progress/kendo-angular-inputs";
-import { ReportDataComponent } from './report/report-data/report-data.component';
+import { ReportDataComponent } from './components/report/report-data/report-data.component';
 import { ProgressBarModule } from '@progress/kendo-angular-progressbar';
-import { MachineErrorComponent } from './report/report-data/machine-error/machine-error.component';
+import { MachineErrorComponent } from './components/report/report-data/machine-error/machine-error.component';
 import { ChartsModule } from '@progress/kendo-angular-charts';
 import 'hammerjs';
-import { EfficiencyComponent } from './report/report-data/efficiency/efficiency.component';
-import { StatesGraphComponent } from './report/report-data/states-graph/states-graph.component';
-import { ReportHeaderComponent } from './report/report-data/report-header/report-header.component';
+import { EfficiencyComponent } from './components/report/report-data/efficiency/efficiency.component';
+import { StatesGraphComponent } from './components/report/report-data/states-graph/states-graph.component';
+import { ReportHeaderComponent } from './components/report/report-data/report-header/report-header.component';
 
 
 
@@ -76,6 +77,7 @@ import { ReportHeaderComponent } from './report/report-data/report-header/report
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en' },
+    { provide: APP_BASE_HREF, useValue: '/lmsmodule/lmsservice'}
   //  { provide: DIALOG_SERVICE, useClass: DialogService },
   ],
   bootstrap: [AppComponent],

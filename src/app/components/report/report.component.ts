@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ReportService } from '../services/report.service';
+import { ReportService } from '../../services/report.service';
 import {
   ReportData,
   ReportLine,
@@ -10,7 +10,7 @@ import {
   ReportEfficiency,
   ReportErrorList,
   ReporDataLoadingStatus,
-} from '../interfaces/report.interface';
+} from '../../interfaces/report.interface'
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -25,7 +25,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   selectedLineByUrl: ReportLine | undefined;
   loadButtonEnable: boolean = false;
   linesLoaded: boolean = false;
-  buttonText: string = 'Load data';
+  buttonText: string = 'Mostar';
   reporDataLoadingStatus: ReporDataLoadingStatus = {
     header: false,
     productionInfo: false,
@@ -57,6 +57,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.routeId = this.route.snapshot.paramMap.get('id');
+
     this.reportService.getLines().subscribe((data: ReportLine[]) => {
       this.reportLines = data;
       this.selectedLineByUrl = this.reportLines.find(x=>x.lineName==this.routeId);
@@ -94,7 +95,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     this.loadEfficiency(this.selectedLine.lineLink);
     this.loadErroList(this.selectedLine.lineLink);
 
-    this.buttonText = 'Loading';
+    this.buttonText = 'Cargando...';
     this.loadButtonEnable = false;
   }
 
@@ -209,7 +210,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     };
 
     this.reporDataLoadingStatus.dataLoaded = true;
-    this.buttonText = 'Reload data';
+    this.buttonText = 'Recargar';
     this.loadButtonEnable = true;
   }
 }

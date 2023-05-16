@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AutocontrolCrudService } from '../services/autocontrol.service';
+import { AutocontrolCrudService } from '../../services/autocontrol.service';
 import { IAutocontrol } from 'src/app/interfaces/autocontrol.interface';
 
 const createFormGroup = (autocontorolItem: IAutocontrol) =>

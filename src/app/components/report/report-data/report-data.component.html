@@ -1,38 +1,39 @@
 <div class="r-grid">
-  <app-report-header [data]="this.reportData?.header">
-
-  </app-report-header>
+  <app-report-header [data]="this.reportData?.header"> </app-report-header>
   <div class="r-body">
     <div class="r-b-box1">
       <table>
         <tr>
           <td class="td-title">Nominal</td>
           <td class="td-values">
-            {{ this.reportData?.productionInfo?.nNominalProduction }}
-            {{this.reportData?.productionInfo?.capacityUnit}}
+            {{ this.reportData?.productionInfo?.nRatedCapacity }}
+            {{ this.reportData?.productionInfo?.capacityUnit }}
           </td>
           <td class="td-values-span" rowspan="4">
-            {{ this.reportData?.productionInfo?.rShiftPercentage?.toPrecision(2) }} %
+            {{
+              this.reportData?.productionInfo?.rShiftPercentage?.toPrecision(2)
+            }}
+            %
           </td>
         </tr>
         <tr>
           <td rowspan="2" class="td-title">Producido</td>
           <td class="td-values">
-            {{ this.reportData?.productionInfo?.actualProduction}}
-            {{this.reportData?.productionInfo?.formatUnit}}
+            {{ this.reportData?.productionInfo?.actualProduction }}
+            {{ this.reportData?.productionInfo?.formatUnit }}
           </td>
         </tr>
         <tr>
           <td class="td-values">
             {{ this.reportData?.productionInfo?.actualProductionCaj }}
-            {{this.reportData?.productionInfo?.skuUnit}}
+            {{ this.reportData?.productionInfo?.skuUnit }}
           </td>
         </tr>
         <tr>
           <td class="td-title">Estimado</td>
           <td class="td-values">
             {{ this.reportData?.productionInfo?.nNominalProduction }}
-            {{this.reportData?.productionInfo?.formatUnit}}
+            {{ this.reportData?.productionInfo?.formatUnit }}
           </td>
         </tr>
       </table>
@@ -52,19 +53,19 @@
         <tr>
           <td class="td-title">UP</td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.uP }} UP
+            {{ this.reportData?.productionInfo?.up?.toFixed(3)}} UP
           </td>
         </tr>
         <tr>
           <td class="td-title">CO2</td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.cO2?.toPrecision(2) }} g/L
+            {{ this.reportData?.productionInfo?.cO2?.toFixed(3) }} g/L
           </td>
         </tr>
         <tr>
           <td class="td-title">O2</td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.o2?.toPrecision(1) }} mg/L
+            {{ this.reportData?.productionInfo?.o2?.toFixed(3) }} mg/L
           </td>
         </tr>
       </table>
@@ -85,11 +86,15 @@
 
         <tr>
           <td class="td-title">Vacio</td>
-          <td class="td-values td-values-ar">{{ this.reportData?.productionInfo?.vacio }} %</td>
-          <td class="td-values td-values-ar">{{ this.reportData?.productionInfo?.vacio1h }} %</td>
+          <td class="td-values td-values-ar">
+            {{ this.reportData?.productionInfo?.vacio }} %
+          </td>
+          <td class="td-values td-values-ar">
+            {{ this.reportData?.productionInfo?.vacio1h }} %
+          </td>
         </tr>
         <tr>
-          <td class="td-title">Lienadora</td>
+          <td class="td-title">Llenadora</td>
           <td class="td-values td-values-ar">
             {{ this.reportData?.productionInfo?.llenadora }} %
           </td>
@@ -114,8 +119,10 @@
           <th colspan="2">Agua</th>
         </tr>
         <tr>
-          <td class="td-title">Balanda</td>
-          <td class="td-values td-values-ar">{{ this.reportData?.productionInfo?.aguaBlanda }} m3</td>
+          <td class="td-title">Blanda</td>
+          <td class="td-values td-values-ar">
+            {{ this.reportData?.productionInfo?.aguaBlanda }} m3
+          </td>
         </tr>
         <tr>
           <td class="td-title">Fria</td>
@@ -159,10 +166,10 @@
       [filterable]="false"
       #grid
     >
-      <kendo-grid-column field="machine" title="Machine" [width]="300">
+      <kendo-grid-column field="machine" title="Maquina" [width]="300">
       </kendo-grid-column>
-      <kendo-grid-column field="reason" title="Alarm"> </kendo-grid-column>
-      <kendo-grid-column field="countError" title="Count" [width]="100">
+      <kendo-grid-column field="reason" title="Alarma"> </kendo-grid-column>
+      <kendo-grid-column field="countError" title="Repeticiones" [width]="100">
       </kendo-grid-column>
     </kendo-grid>
   </div>

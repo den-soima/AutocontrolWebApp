@@ -56,7 +56,7 @@ export interface ReportProductionInfo {
   vacio1h: number;
   llenadora1h: number;
   lleno1h: number;
-  uP: number;
+  up: number;
   o2: number;
   cO2: number;
   aguaBlanda: number;

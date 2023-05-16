@@ -19,8 +19,10 @@ export class EfficiencyComponent implements OnInit, OnChanges {
     this.seriesEff = [];
     this.seriesEffAcumulado = [];
 
-    this.data?.forEach((x) => {
-      this.categories.push(x.hoursAgo.toString());
+
+    this.data?.sort((a,b)=> b.hourRecorded - a.hourRecorded).forEach((x) => {
+      console.log(x);
+      this.categories.push(x.hourRecorded.toString());
       this.seriesEff.push(Math.round(x.percEff*100));
       this.seriesEffAcumulado.push(Math.round(x.percEffAcumulado*100));
     });

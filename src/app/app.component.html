@@ -1,5 +1,4 @@
 <plantit-web-frame
-  icon-url="/assets/icon.svg"
   [pageTitle]="title"
   [serverUrl]="pitBaseUrl"
   [baseApplicationId]="clientId"
@@ -8,22 +7,15 @@
   [basePostLogoutRedirectUrl]="logoutUrl"
   [handleRedirect]="frameRedirect"
   [language]="locale"
-  clear-hash-after-login="false"
-  logo-type="ProductLogo"
-  hide-menu-button="false"
 >
-  <div class="center" slot="frame-center"></div>
-  <div slot="frame-right"></div>
-  <!-- <p slot="frame-left">Custom content left to the title</p>
-    <div slot="frame-right">
-      <p>Custom content right to the title</p>
-      <p>Example with multiple child elements</p>
-    </div> -->
 </plantit-web-frame>
 <!-- <plantit-web-progress-indicator determinable="true"></plantit-web-progress-indicator> -->
 
 <main>
-  <plantit-web-sitenavigation is-collapsable="true" basetab-caption="Navigation:">
+  <plantit-web-sitenavigation
+    is-collapsable="true"
+    basetab-caption="Navigation:"
+  >
     <ul class="static" tab-caption="LMS">
       <!-- <li>
         <a
@@ -40,9 +32,8 @@
           routerLinkActive="active"
           ariaCurrentWhenActive="page"
         >
-          Dashboard
+          Panel Envasado
         </a>
-
       </li>
       <li>
         <a
@@ -50,9 +41,8 @@
           routerLinkActive="active"
           ariaCurrentWhenActive="page"
         >
-          Report
+          Informe por linea
         </a>
-
       </li>
     </ul>
   </plantit-web-sitenavigation>
@@ -62,4 +52,4 @@
   </content>
 </main>
 
-<plantit-web-footer>{{copyRightFooter}}</plantit-web-footer>
+<plantit-web-footer>{{ copyRightFooter }}</plantit-web-footer>

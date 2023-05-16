@@ -8,7 +8,7 @@ export const environment = {
   redirectUrl: 'http://localhost:4200',
   apiUrl: 'https://esbsjum54:54321/lmsmodule/lmsservice/api/v1',
   logoutUrl: 'https://esbsjum54:8777/webportal/home/logout',
-  clientId: 'UserFrontend',
+  clientId: 'LmsModule',
   sdApi: 'infrastructure/api/ServiceDiscovery',
   moduleTechname: 'webortal',
   serviceTechname: 'iitgateway'

@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
   public logoutUrl: string;
   public stream: [] = [];
   public sinnloseProperty: any;
+  public hidemenu: boolean = false;
 
   public copyRightFooter = `\u00A9 Proleit, ${new Date().getFullYear()} All rights reserved`;
 

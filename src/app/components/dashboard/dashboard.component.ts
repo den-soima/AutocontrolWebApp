@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   DashboardData,
   DashboardHeader,
-} from '../interfaces/dashboard.interface';
-import { DashboardService } from '../services/dashboard.service';
+} from '../../interfaces/dashboard.interface';
+import { DashboardService } from '../../services/dashboard.service';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import { RankImage } from '../enums/rank-image.enum';
+import { RankImage } from '../../enums/rank-image.enum';
 
 @Component({
   selector: 'app-dashboard',

@@ -7,7 +7,13 @@
       <th>Paros</th>
     </tr>
     <tr *ngFor="let item of this.data; index as i">
-      <td [ngStyle]="{ 'background-color': item?.colorCode }" class="td-name">
+      <td
+        [ngStyle]="{
+          'background-color': item?.colorCode,
+          'color': item?.fontColor
+        }"
+        class="td-name"
+      >
         {{ item?.szText }}
       </td>
       <td class="td-values">{{ item?.efficiency?.toPrecision(3) }}</td>
