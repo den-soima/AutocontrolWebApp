@@ -20,7 +20,7 @@ export class ReportHeaderComponent implements OnInit {
 
     this.header = {
       actualTime: this.data?.actualTime.toString().substring(11,19) as string,
-      actualDate: this.data?.actualDate.toString().substring(0,10).replace("-","/").replace("-","/") as string,
+      actualDate: this.data?.actualDate.toString() as string,
       lineName: this.data?.lineName as string,
       nFillerMachine: this.data?.nFillerMachine as number,
     };
@@ -32,5 +32,22 @@ export class ReportHeaderComponent implements OnInit {
   }
 
   @Input() data: ReportHeader | undefined;
+
+  formatDate(value: any){
+    if (value !== undefined){
+      return new Date(value.toString()).toLocaleString('es-ES').substring(0,9);
+
+    }else{
+      return '';
+    }
+  }
+
+  formatThousand(value: any): string {
+    return Number(value).toLocaleString('de');//.replace(',', '.');
+  }
+
+  formatNumber(value: number) {
+    return value >= 0 ? this.formatThousand((value!)) : '';
+  }
 
 }

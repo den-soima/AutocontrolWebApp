@@ -35,6 +35,8 @@ import 'hammerjs';
 import { EfficiencyComponent } from './components/report/report-data/efficiency/efficiency.component';
 import { StatesGraphComponent } from './components/report/report-data/states-graph/states-graph.component';
 import { ReportHeaderComponent } from './components/report/report-data/report-header/report-header.component';
+import { AutocontrolDialogComponent } from './components/autocontrol/autocontrol-dialog/autocontrol-dialog.component';
+import { DialogComponent } from './autocontrol/dialog/dialog.component';
 
 
 
@@ -49,6 +51,8 @@ import { ReportHeaderComponent } from './components/report/report-data/report-he
     EfficiencyComponent,
     StatesGraphComponent,
     ReportHeaderComponent,
+    AutocontrolDialogComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,

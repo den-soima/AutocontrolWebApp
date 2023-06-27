@@ -1,3 +1,5 @@
+import { StringFilterCellComponent } from "@progress/kendo-angular-grid";
+
 export interface ReportLine {
   lineLink: number;
   lineName: string;

@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="gridTitle">Panel Envasado</div>
+  <div class="gridTitle">Panel H Envasado</div>
   <div class="userTable">
     <kendo-grid
       [kendoGridBinding]="dashboardData"
@@ -29,15 +29,15 @@
           {{ dataItem.emptyInspector > 0 ? dataItem.emptyInspector : "" }}
         </ng-template>
       </kendo-grid-column>
-      <kendo-grid-column field="fullInspector" title="Lieno">
+      <kendo-grid-column field="fullInspector" title="Lleno">
         <ng-template kendoGridCellTemplate let-dataItem>
           {{ dataItem.fullInspector > 0 ? dataItem.fullInspector : "" }}
         </ng-template>
       </kendo-grid-column>
-      <kendo-grid-column field="estimated" title="Estimaccion">
-        <ng-template kendoGridCellTemplate let-dataItem>
+      <kendo-grid-column field="estimated" title="Estimacion">
+        <ng-template kendoGridCellTemplate let-dataItem >
           {{
-            formatNumber(
+            formatInteger(
               dataItem.goodQty / dataItem.ratioOfCurrentShiftDuration
             )
           }}

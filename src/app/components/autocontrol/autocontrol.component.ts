@@ -1,20 +1,8 @@
 import { Component, OnInit} from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
 import { AutocontrolCrudService } from '../../services/autocontrol.service';
-import { IAutocontrol } from 'src/app/interfaces/autocontrol.interface';
-
-const createFormGroup = (autocontorolItem: IAutocontrol) =>
-  new FormGroup({
-    nACId: new FormControl(autocontorolItem.nACId),
-    szLineName: new FormControl(autocontorolItem.szLineName),
-    szACName: new FormControl(autocontorolItem.szACName),
-    szArea: new FormControl(autocontorolItem.szArea),
-    // nStatus: new FormControl(autocontorolItem.nStatus),
-    szStatus: new FormControl(autocontorolItem.szStatus),
-    szComment: new FormControl(autocontorolItem.szComment),
-    tLastModified: new FormControl(autocontorolItem.tLastModified),
-  });
-
+import { IAutocontrol, IAutocontrolField } from 'src/app/interfaces/autocontrol.interface';
+import { GridDataResult, AddEvent, RemoveEvent } from '@progress/kendo-angular-grid';
+import { State } from '@progress/kendo-data-query';
 @Component({
   selector: 'app-lines',
   templateUrl: './autocontrol.component.html',
@@ -22,11 +10,10 @@ const createFormGroup = (autocontorolItem: IAutocontrol) =>
 })
 export class AutocontrolComponent implements OnInit {
   public autocontrolData: IAutocontrol[] = [];
+  public mySelection: IAutocontrol[] = [];
   public isNew: boolean = false;
-  public active = false;
-  public editedRowIndex: number = 0;
-  public formGroup: FormGroup | any = null;
-
+  public editItem: IAutocontrol | undefined;
+  public nKeyAC: number = 0;
   /**
    *
    */
@@ -35,59 +22,39 @@ export class AutocontrolComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.autocontrolService.getAll().subscribe((data) => {
+    this.autocontrolService.getAutocontrols().subscribe((data) => {
       this.autocontrolData = data;
     });
   }
 
-  // public addHandler() {]
-  //   this.formGroup = createFormGroup({
-  //     nACId: 0,
-  //     szLineName: '',
-  //     szACName: '',
-  //     szArea: '',
-  //     nStatus: 0,
-  //     szStatus: '',
-  //     szComment: '',
-  //     tLastModified: new Date()
-  //   });
-  //   this.isNew = true;
-  //   this.active = true;
-  // }
+  public selectionChange(event: any): void {
+    console.log('Grid - onStateChange');
+    console.log(event);
+    event.selectedRows[0].nACId = true;
+    this.autocontrolData.find(item => item.nACId == event.selectedRows[0].nACId)?.enableButtons == true;
+  }
 
-  public editHandler(event: any) {
-    this.formGroup = createFormGroup(event.dataItem);
+  public addHandler() {
+    this.isNew = true;
+  }
+
+  public editHandler(event: AddEvent) {
+    this.editItem = event.dataItem;
+    this.nKeyAC = this.editItem?.nACId!;
     this.isNew = false;
-    this.active = true;
-    this.editedRowIndex = event.rowIndex;
   }
 
-  public removeHandler({ dataItem }: any) {
-    dataItem.forEach((dataItem: any) => {
-      const index: number = this.autocontrolData.indexOf(dataItem);
-      if (index !== -1) {
-        const cloneProducts = this.autocontrolData;
-        cloneProducts.splice(index, 1);
-        this.autocontrolData = [];
-        cloneProducts.forEach((autocontrolItem) => {
-          this.autocontrolData.push(autocontrolItem);
-        });
-      }
-    });
+  public cancelHandler(){
+    this.nKeyAC = 0;
+    this.editItem  = undefined;
   }
 
-  onSave() {
-    const cloneProducts = this.autocontrolData;
-    cloneProducts.splice(this.editedRowIndex, 1, this.formGroup.value);
-    this.autocontrolData = [];
-    cloneProducts.forEach((item) => {
-      this.autocontrolData.push(item);
-    });
-    this.active = false;
+  public saveHandler(fileds : IAutocontrolField[]){
+    // save service
+    this.editItem  = undefined;
   }
 
-  onCancel() {
-    this.formGroup.reset();
-    this.active = false;
-  }
+  public removeHandler(args: RemoveEvent) {
+    // remove service
+}
 }

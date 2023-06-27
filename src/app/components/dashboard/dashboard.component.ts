@@ -27,20 +27,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.loadData();
     this.reloadInterval = setInterval(() => {
       this.loadData();
-      console.log("Dashboard Interval");
+      console.log('Dashboard Interval');
     }, 30000);
-
-
   }
 
   ngOnDestroy(): void {
-    if (this.reloadInterval){
-      clearInterval(this.reloadInterval)
-    console.log("Interval destoyed" + this.reloadInterval);
-    };
+    if (this.reloadInterval) {
+      clearInterval(this.reloadInterval);
+      console.log('Interval destoyed' + this.reloadInterval);
+    }
   }
 
-   loadData() {
+  loadData() {
     this.dashboardService.getData().subscribe((data: DashboardData[]) => {
       this.dashboardData = data;
     });
@@ -63,7 +61,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   formatThousand(value: any): string {
-    return Number(value).toLocaleString().replace(',', '.');
+    return Number(value).toLocaleString('de');//.replace(',', '.');
   }
 
   levelCalculation(value: any) {
@@ -76,7 +74,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   formatNumber(value: number) {
-    return value > 0 ? this.formatThousand(Math.trunc(value)) : '';
+    return value >= 0 ? this.formatThousand((value)) : '';
+  }
+  formatInteger(value: number) {
+    return value >= 0 ? this.formatThousand(Math.trunc(value)) : '';
   }
 
   waterRate(value: number) {
@@ -115,8 +116,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     if (record?.secProductionTime == 0) return RankImage.Durmiendo;
     if (record?.topPercent == 1) return RankImage.Aeropuerto;
-    if (record?.nShiftPercent || 0 < 40) return RankImage.Ambulancia;
-    if (record?.nShiftPercent || 0 > 5 + (record?.nObjEff || 0))
+    if (record?.nShiftPercent! < 40) return RankImage.Ambulancia;
+    if (record?.nShiftPercent! > 5 + (record?.nObjEff!))
       return RankImage.Motocicleta;
 
     return RankImage.Bicicleta;

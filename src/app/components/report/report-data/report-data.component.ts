@@ -44,5 +44,16 @@ export class ReportDataComponent implements OnChanges, OnInit {
 
   }
 
+  formatThousand(value: any): string {
+    return Number(value).toLocaleString('de');//.replace(',', '.');
+  }
+
+  formatNumber(value: number) {
+    return value >= 0 ? this.formatThousand((value!)) : '';//Math.trunc
+  }
+
+  formatInteger(value: number) {
+    return value >= 0 ? this.formatThousand(Math.trunc(value!)) : '';//Math.trunc
+  }
 
 }

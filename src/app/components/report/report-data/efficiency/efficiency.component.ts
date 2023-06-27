@@ -20,8 +20,7 @@ export class EfficiencyComponent implements OnInit, OnChanges {
     this.seriesEffAcumulado = [];
 
 
-    this.data?.sort((a,b)=> b.hourRecorded - a.hourRecorded).forEach((x) => {
-      console.log(x);
+    this.data?.sort((a,b)=> b.hoursAgo - a.hoursAgo).forEach((x) => {
       this.categories.push(x.hourRecorded.toString());
       this.seriesEff.push(Math.round(x.percEff*100));
       this.seriesEffAcumulado.push(Math.round(x.percEffAcumulado*100));
@@ -33,4 +32,12 @@ export class EfficiencyComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   @Input() data: ReportEfficiency[] | undefined;
+
+  formatThousand(value: any): string {
+    return Number(value).toLocaleString('de');//.replace(',', '.');
+  }
+
+  formatNumber(value: number) {
+    return value >= 0 ? this.formatThousand((value!)) : '';
+  }
 }

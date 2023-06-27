@@ -25,4 +25,12 @@ export class StatesGraphComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   @Input() data: ReportStatesGraph[] | undefined;
+
+  formatThousand(value: any): string {
+    return Number(value).toLocaleString('de');//.replace(',', '.');
+  }
+
+  formatNumber(value: number) {
+    return value >= 0 ? this.formatThousand(value!) : '';
+  }
 }

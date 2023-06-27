@@ -6,12 +6,12 @@
         <tr>
           <td class="td-title">Nominal</td>
           <td class="td-values">
-            {{ this.reportData?.productionInfo?.nRatedCapacity }}
+            {{ this.formatNumber(this.reportData?.productionInfo?.nRatedCapacity!) }}
             {{ this.reportData?.productionInfo?.capacityUnit }}
           </td>
           <td class="td-values-span" rowspan="4">
             {{
-              this.reportData?.productionInfo?.rShiftPercentage?.toPrecision(2)
+              this.formatNumber(this.reportData?.productionInfo?.rShiftPercentage!)
             }}
             %
           </td>
@@ -19,21 +19,21 @@
         <tr>
           <td rowspan="2" class="td-title">Producido</td>
           <td class="td-values">
-            {{ this.reportData?.productionInfo?.actualProduction }}
+            {{ this.formatNumber(this.reportData?.productionInfo?.actualProduction!) }}
             {{ this.reportData?.productionInfo?.formatUnit }}
           </td>
         </tr>
         <tr>
           <td class="td-values">
-            {{ this.reportData?.productionInfo?.actualProductionCaj }}
+            {{ this.formatNumber(this.reportData?.productionInfo?.actualProductionCaj!) }}
             {{ this.reportData?.productionInfo?.skuUnit }}
           </td>
         </tr>
         <tr>
           <td class="td-title">Estimado</td>
           <td class="td-values">
-            {{ this.reportData?.productionInfo?.nNominalProduction }}
-            {{ this.reportData?.productionInfo?.formatUnit }}
+            {{ this.formatInteger(this.reportData?.productionInfo?.actualProductionCaj!/this.reportData?.productionInfo?.ratioOfCurrentShiftDuration!) }}
+            {{ this.reportData?.productionInfo?.skuUnit }}
           </td>
         </tr>
       </table>
@@ -53,19 +53,19 @@
         <tr>
           <td class="td-title">UP</td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.up?.toFixed(3)}} UP
+            {{ this.formatNumber(this.reportData?.productionInfo?.up!)}} UP
           </td>
         </tr>
         <tr>
           <td class="td-title">CO2</td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.cO2?.toFixed(3) }} g/L
+            {{ this.formatNumber(this.reportData?.productionInfo?.cO2!) }} g/L
           </td>
         </tr>
         <tr>
           <td class="td-title">O2</td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.o2?.toFixed(3) }} mg/L
+            {{ this.formatNumber(this.reportData?.productionInfo?.o2!) }} mg/L
           </td>
         </tr>
       </table>
@@ -87,28 +87,28 @@
         <tr>
           <td class="td-title">Vacio</td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.vacio }} %
+            {{ this.formatNumber(this.reportData?.productionInfo?.vacio!) }} %
           </td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.vacio1h }} %
+            {{ this.formatNumber(this.reportData?.productionInfo?.vacio1h!) }} %
           </td>
         </tr>
         <tr>
           <td class="td-title">Llenadora</td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.llenadora }} %
+            {{ this.formatNumber(this.reportData?.productionInfo?.llenadora!) }} %
           </td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.llenadora1h }} %
+            {{ this.formatNumber(this.reportData?.productionInfo?.llenadora1h!) }} %
           </td>
         </tr>
         <tr>
           <td class="td-title">Lleno</td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.lleno }} %
+            {{ this.formatNumber(this.reportData?.productionInfo?.lleno!) }} %
           </td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.lleno1h }} %
+            {{ this.formatNumber(this.reportData?.productionInfo?.lleno1h!) }} %
           </td>
         </tr>
       </table>
@@ -121,13 +121,13 @@
         <tr>
           <td class="td-title">Blanda</td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.aguaBlanda }} m3
+            {{ this.formatNumber(this.reportData?.productionInfo?.aguaBlanda!) }} m3
           </td>
         </tr>
         <tr>
           <td class="td-title">Fria</td>
           <td class="td-values td-values-ar">
-            {{ this.reportData?.productionInfo?.aguaFria }} m3
+            {{ this.formatNumber(this.reportData?.productionInfo?.aguaFria!) }} m3
           </td>
         </tr>
       </table>
@@ -137,19 +137,19 @@
         <tr>
           <td class="td-title">BBT</td>
           <td class="td-values">
-            {{ this.reportData?.productionInfo?.bbt }} HL
+            {{ this.formatNumber(this.reportData?.productionInfo?.bbt!) }} HL
           </td>
         </tr>
         <tr>
           <td class="td-title">Semana</td>
           <td class="td-values">
-            {{ this.reportData?.productionInfo?.semana }} HL
+            {{ this.formatNumber(this.reportData?.productionInfo?.semana!) }} HL
           </td>
         </tr>
         <tr>
           <td class="td-title">Turno</td>
           <td class="td-values">
-            {{ this.reportData?.productionInfo?.turno }} HL
+            {{ this.formatNumber(this.reportData?.productionInfo?.turno!) }} HL
           </td>
         </tr>
       </table>

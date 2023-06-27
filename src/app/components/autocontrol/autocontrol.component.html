@@ -4,30 +4,17 @@
     <!-- <ng-container kendoDialogContainer></ng-container> -->
     <kendo-grid
       [kendoGridBinding]="autocontrolData"
+      kendoGridSelectBy="nACId"
       [selectable]="{ mode: 'single' }"
+      [selectedKeys]="mySelection"
       [pageSize]="15"
       [pageable]="true"
       [sortable]="true"
-      [columnMenu]="true"
+      (selectionChange)="selectionChange($event)"
       (edit)="editHandler($event)"
       (remove)="removeHandler($event)"
-      #grid
+      (add)="addHandler()"
     >
-      <ng-template kendoGridToolbarTemplate [position]="'top'">
-        <button
-          kendoButton
-          [look]="'flat'"
-          [icon]="'edit'"
-          pGridButtonEdit
-        >Edit</button>
-        <button
-          kendoButton
-          [look]="'flat'"
-          [icon]="'delete'"
-
-          pGridButtonDelete
-        >Delete</button>
-      </ng-template>
 
       <kendo-grid-checkbox-column
         [showSelectAll]="false"
@@ -51,36 +38,23 @@
 
       <kendo-grid-column field="tLastModified" title="Last Modified">
       </kendo-grid-column>
+
+      <kendo-grid-command-column title="command" [width]="220">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <button [disabled] ="false" kendoGridEditCommand>Edit</button>
+          <button [disabled] ="false" kendoGridRemoveCommand>Delete</button>
+        </ng-template>
+      </kendo-grid-command-column>
     </kendo-grid>
 
-    <kendo-dialog-actions
-      *ngIf="active"
-      [title]="isNew ? 'Add new product' : 'Edit product'"
-      (close)="onCancel()"
+    <app-autocontrol-dialog
+      [nKeyAC]="nKeyAC"
+      [isNew]="isNew"
+      (save)="saveHandler($event)"
+      (cancel)="cancelHandler()"
     >
-      <form [formGroup]="formGroup">
-        <h4>ID</h4>
-        <p-inputfield formControlName="nACId"></p-inputfield>
-        <h4>Name</h4>
-        <p-inputfield formControlName="szLineName"></p-inputfield>
-        <h4>Line name</h4>
-        <p-inputfield formControlName="szACName"></p-inputfield>
-        <h4>Area</h4>
-        <p-inputfield formControlName="szArea"></p-inputfield>
-        <!-- <h4>nStatus</h4>
-        <p-inputfield formControlName="nStatus"></p-inputfield> -->
-        <h4>szStatus</h4>
-        <p-inputfield formControlName="szStatus"></p-inputfield>
-        <h4>Comment</h4>
-        <p-inputfield formControlName="szComment"></p-inputfield>
-        <h4>Last Modified</h4>
-        <p-inputfield formControlName="tLastModified"></p-inputfield>
-      </form>
 
-      <kendo-dialog-actions>
-        <button class="k-button" (click)="onCancel()">Cancel</button>
-        <button class="k-button k-primary" (click)="onSave()">Save</button>
-      </kendo-dialog-actions>
-    </kendo-dialog-actions>
+    </app-autocontrol-dialog>
+
   </div>
 </div>
