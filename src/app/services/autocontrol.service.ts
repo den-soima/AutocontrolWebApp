@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { IAutocontrol, IAutocontrolDialogField, IAutocontrolFieldEnum } from '../interfaces/autocontrol.interface';
+import {
+  IAutocontrol,
+  IAutocontrolDialogField,
+  IAutocontrolFieldEnum,
+} from '../interfaces/autocontrol.interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -9,29 +13,33 @@ import { environment } from 'src/environments/environment';
 })
 export class AutocontrolCrudService {
   private baseURL = environment.apiUrl;
+  public uploadFileURL: string = environment.apiUrl + '/autocontrol/field/file';
+  public deleteFileURL: string = '';
   autocontrol: IAutocontrol[];
-  constructor(private http: HttpClient ) {
+  constructor(private http: HttpClient) {
     this.autocontrol = [];
   }
 
   getAutocontrols(): Observable<any> {
-    return this.http.get(`${this.baseURL}/autocontrol`) }
+    return this.http.get(`${this.baseURL}/autocontrol`);
+  }
 
-    getDialogFieldsByACId(nKeyAC: number): Observable<IAutocontrolDialogField[]> {
-      return this.http.get<IAutocontrolDialogField[]>(
-        `${this.baseURL}/autocontrol/fields/${nKeyAC}`
-      );
-    }
+  getDialogFieldsByACId(nKeyAC: number): Observable<IAutocontrolDialogField[]> {
+    return this.http.get<IAutocontrolDialogField[]>(
+      `${this.baseURL}/autocontrol/fields/${nKeyAC}`
+    );
+  }
 
-    getEnumsByFieldId(nACFId: number): Observable<IAutocontrolFieldEnum[]> {
-      return this.http.get<IAutocontrolFieldEnum[]>(
-        `${this.baseURL}/autocontrolfieldenum/${nACFId}`
-      );
-    }
+  getEnumsByFieldId(nACFId: number): Observable<IAutocontrolFieldEnum[]> {
+    return this.http.get<IAutocontrolFieldEnum[]>(
+      `${this.baseURL}/autocontrol/fieldenum/${nACFId}`
+    );
+  }
 
-    // UpdateAutocontrolField(nACFKey: number): Observable<ReportEfficiency[]> {
-    //   return this.http.get<ReportEfficiency[]>(
-    //     `${this.baseURL}/efficiency/${nACFKey}`
-    //   );
-    // }
+
+  // UpdateAutocontrolField(nACFKey: number): Observable<ReportEfficiency[]> {
+  //   return this.http.get<ReportEfficiency[]>(
+  //     `${this.baseURL}/efficiency/${nACFKey}`
+  //   );
+  // }
 }

@@ -51,6 +51,7 @@ export class AutocontrolComponent implements OnInit {
 
   public saveHandler(fileds : IAutocontrolField[]){
     // save service
+    this.nKeyAC = 0;
     this.editItem  = undefined;
   }
 

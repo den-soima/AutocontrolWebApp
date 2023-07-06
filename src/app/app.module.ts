@@ -20,9 +20,7 @@ import '@progress/kendo-angular-intl/locales/en/all';
 import { SdkComponentsGridModule } from '@proleit/sdk-components-grid';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { DialogModule, DialogService } from '@progress/kendo-angular-dialog';
-import { SdkComponentsValidationModule } from '@proleit/sdk-components-validation';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
-import { SdkComponentsDateinputsModule } from '@proleit/sdk-components-dateinputs';
 import { ReportComponent } from './components/report/report.component';
 import { DropDownListModule } from "@progress/kendo-angular-dropdowns";
 import { LabelModule } from "@progress/kendo-angular-label";
@@ -37,6 +35,10 @@ import { StatesGraphComponent } from './components/report/report-data/states-gra
 import { ReportHeaderComponent } from './components/report/report-data/report-header/report-header.component';
 import { AutocontrolDialogComponent } from './components/autocontrol/autocontrol-dialog/autocontrol-dialog.component';
 import { DialogComponent } from './autocontrol/dialog/dialog.component';
+import { UploadsModule } from '@progress/kendo-angular-upload';
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+
+
 
 
 
@@ -70,14 +72,14 @@ import { DialogComponent } from './autocontrol/dialog/dialog.component';
     ButtonsModule,
     DialogModule,
     SdkComponentsGridModule,
-    SdkComponentsValidationModule,
-    SdkComponentsDateinputsModule,
     HttpClientModule,
     DropDownListModule,
     LabelModule,
     InputsModule,
     ProgressBarModule,
-    ChartsModule
+    ChartsModule,
+    UploadsModule,
+    DateInputsModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en' },
