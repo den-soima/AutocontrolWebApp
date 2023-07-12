@@ -1,0 +1,52 @@
+
+
+.ad-field{
+  height: 40px;
+  margin: 5px 15px;
+  display: flex;
+  align-items: center;
+}
+
+.ad-field-file-upload {
+  height: 40px;
+  margin: 5px 15px;
+}
+
+.ad-file-upload-action {
+  display: flex;
+  align-items: center;
+}
+.ad-file-upload-btn {
+  button{
+    height: 27px;
+    border-radius: 15px;
+    background-color: #39628f;
+    color: white;
+  }
+}
+
+.ad-file-upload-info {
+
+}
+
+.ad-save-button {
+  background-color: #39628f;
+  color: white;
+}
+
+.ad-file-input {
+  display: none;
+}
+.ad-fu-file-row {
+  display: flex;
+  align-items: center;
+}
+
+.ad-fu-file-info {
+  min-height: 250px;
+
+}
+
+.ad-fu-file-remove {
+  align-self:self-end;
+}

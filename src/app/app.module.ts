@@ -6,10 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-// import {
-//   DIALOG_SERVICE,
-//   SdkServicesBaseModule,
-// } from '@proleit/sdk-services-base';
 import { AutocontrolComponent } from './components/autocontrol/autocontrol.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SdkComponentsCommonModule } from '@proleit/sdk-components-common';
@@ -37,10 +33,6 @@ import { AutocontrolDialogComponent } from './components/autocontrol/autocontrol
 import { DialogComponent } from './autocontrol/dialog/dialog.component';
 import { UploadsModule } from '@progress/kendo-angular-upload';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
-
-
-
-
 
 @NgModule({
   declarations: [

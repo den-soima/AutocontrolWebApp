@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   IAutocontrol,
   IAutocontrolDialogField,
+  IAutocontrolField,
   IAutocontrolFieldEnum,
 } from '../interfaces/autocontrol.interface';
 import { HttpClient } from '@angular/common/http';
@@ -36,10 +37,19 @@ export class AutocontrolCrudService {
     );
   }
 
+  postFile(file: File): Observable<boolean> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+    console.log(formData.get(file.name));
+    return this.http
+      .post<boolean>(`${this.baseURL}/autocontrol/field/file`, formData);
+}
 
-  // UpdateAutocontrolField(nACFKey: number): Observable<ReportEfficiency[]> {
-  //   return this.http.get<ReportEfficiency[]>(
-  //     `${this.baseURL}/efficiency/${nACFKey}`
-  //   );
-  // }
+
+  updateAutocontrolField(field:IAutocontrolField): Observable<IAutocontrolField[]> {
+    return this.http.put<IAutocontrolField[]>(
+      `${this.baseURL}/autocontrol/field`,
+      field
+    );
+  }
 }

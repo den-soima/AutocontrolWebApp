@@ -25,7 +25,7 @@ export interface IAutocontrolDialogField {
   enumData:IAutocontrolFieldEnum[];
 }
 export interface IAutocontrolField {
-  nKey: number | null;
+  nKey: number;
   nKeyAC: number | null;
   nDataXLinkAutoControlField: number | null;
   rMinValue: number | null;

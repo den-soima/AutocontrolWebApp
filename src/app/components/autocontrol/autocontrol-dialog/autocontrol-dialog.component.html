@@ -1,118 +1,172 @@
 <ng-container kendoDialogContainer>
   <kendo-dialog
     *ngIf="active"
-    [title]="isNew ? 'Add new product' : 'Edit product - ' + dialogFields[0]?.szACName"
+    [title]="
+      isNew ? 'Add new product' : 'Edit product - ' + dialogFields[0]?.szACName
+    "
     (close)="closeForm()"
   >
-    <form [formGroup]="formGroup">
-      <div *ngFor="let item of dialogFields">
-        <div [ngSwitch]="item.nFieldDataType">
-          <!-- Integer -->
-          <kendo-formfield *ngSwitchCase="fieldType.Integer" [name]="item.szACFieldName">
-            <kendo-label [text]="item.szACFieldName">
+    <div class="ad-form">
+      <form #form="ngForm">
+        <div *ngFor="let item of dialogFields">
+          <div [ngSwitch]="item.nFieldDataType" class="ad-main">
+            <!-- Integer -->
+            <div *ngSwitchCase="fieldType.Integer" class="ad-field">
+              <kendo-label [for]="fieldInteger" [text]="item.szACFieldName">
+              </kendo-label>
               <kendo-numerictextbox
-                [formControlName]="item.szACFieldName"
-                [style.width.px]="200"
+                #fieldInteger
+                [(ngModel)]="item.typedValue"
+                [name]="item.szACFieldName"
                 format="n0"
                 [min]="item.rMinValue"
                 [max]="item.rMaxValue == 0 ? item.rMaxValue : 100000000"
                 [step]="10"
+                ngDefaultControl
               >
               </kendo-numerictextbox>
-            </kendo-label>
-          </kendo-formfield>
-          <!-- String -->
-          <kendo-formfield *ngSwitchCase="fieldType.String" [name]="item.szACFieldName">
-            <kendo-label [text]="item.szACFieldName">
-              <input
-                [formControlName]="item.szACFieldName"
-                [style.width.px]="200"
-                kendoTextBox
-                #stringField
-                required
-              />
-            </kendo-label>
-            <!-- <kendo-formhint>String field</kendo-formhint> -->
-            <kendo-formerror>Error: Field is required</kendo-formerror>
-          </kendo-formfield>
-          <!-- Float -->
-          <kendo-formfield *ngSwitchCase="fieldType.Float" [name]="item.szACFieldName">
-            <kendo-label [text]="item.szACFieldName">
-              <kendo-numerictextbox
-                [formControlName]="item.szACFieldName"
-                [style.width.px]="170"
-                format="n2"
+            </div>
+            <!-- String -->
+            <div *ngSwitchCase="fieldType.String" class="ad-field">
+              <kendo-label [for]="fieldString" [text]="item.szACFieldName">
+              </kendo-label>
+              <kendo-textbox
+                #fieldString
+                [(ngModel)]="item.typedValue"
                 [name]="item.szACFieldName"
+                [showSuccessIcon]="item.typedValue.length > 1"
+                showErrorIcon="initial"
+                required
+                ngDefaultControl
+              >
+              </kendo-textbox>
+            </div>
+            <!-- Float -->
+            <div *ngSwitchCase="fieldType.Float" class="ad-field">
+              <kendo-label [for]="fieldFloat" [text]="item.szACFieldName">
+              </kendo-label>
+              <kendo-numerictextbox
+                #fieldFloat
+                [(ngModel)]="item.typedValue"
+                [name]="item.szACFieldName"
+                format="n2"
                 [min]="item.rMinValue"
                 [max]="item.rMaxValue == 0 ? item.rMaxValue : 100000000"
                 [step]="10"
               >
               </kendo-numerictextbox>
-            </kendo-label>
-          </kendo-formfield>
-          <!-- Enum -->
-          <kendo-formfield *ngSwitchCase="fieldType.Enum" [name]="item.szACFieldName">
-            <kendo-label [text]="item.szACFieldName">
+            </div>
+            <!-- Enum -->
+            <div *ngSwitchCase="fieldType.Enum" [class]="'ad-field'">
+              <kendo-label [for]="fieldEnum" [text]="item.szACFieldName">
+              </kendo-label>
               <kendo-dropdownlist
-                [formControlName]="item.szACFieldName"
+                #fieldEnum
+                [(ngModel)]="item.typedValue"
+                [name]="item.szACFieldName"
                 [data]="item.enumData"
                 textField="szEnumValue"
                 valueField="nEnumValue"
                 [isRequired]="true"
               >
               </kendo-dropdownlist>
-            </kendo-label>
-          </kendo-formfield>
-          <!-- File -->
-          <kendo-formfield *ngSwitchCase="fieldType.File" [name]="item.szACFieldName">
-            <kendo-label [text]="item.szACFieldName">
-              <kendo-fileselect [formControlName]="item.szACFieldName">
-              </kendo-fileselect>
-            </kendo-label>
-          </kendo-formfield>
-          <!-- Date -->
-          <kendo-formfield *ngSwitchCase="fieldType.Date" [name]="item.szACFieldName">
-            <kendo-label [text]="item.szACFieldName">
+            </div>
+            <!-- File -->
+            <div *ngSwitchCase="fieldType.File" class="ad-field-file-upload">
+              <!-- <kendo-fileselect
+                class="ad-fileselect"
+                [(ngModel)]="item.typedValue"
+                name="myFileSelect"
+                #myFileSelect="ngModel"
+                ngDefaultModel
+              >
+              </kendo-fileselect> -->
+              <input
+                type="file"
+                name="myFileSelect"
+                (change)="onFileSelected(item, $event)"
+                class="ad-file-input"
+                #fileUpload
+              />
+              <div class="ad-file-upload-action">
+                <div class="ad-file-upload-btn">
+                <button  (click)="fileUpload.click()">
+                  attach
+                </button>
+              </div>
+                <div class="ad-file-upload-info">
+                  <span> {{ filesToUpload.length }} files. </span>
+                  <span>
+                    Total size: {{ filesToUploadSize.toFixed(2) }} kB</span
+                  >
+                </div>
+              </div>
+              <div *ngFor="let file of item.typedValue">
+                <div class="ad-fu-file-row">
+                  <div class="ad-fu-file-info">
+                    Name: {{ file.name }}, size {{ file.size }}
+                  </div>
+                  <div class="ad-fu-file-remove">
+                    <button onclick="">Remove</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Date -->
+            <div *ngSwitchCase="fieldType.Date" class="ad-field">
+              <kendo-label [for]="fieldDate" [text]="item.szACFieldName">
+              </kendo-label>
               <kendo-datepicker
-                [formControlName]="item.szACFieldName"
-                [popupSettings]="{ animate: false }"
+                #fieldDate
+                [(ngModel)]="item.typedValue"
+                [name]="item.szACFieldName"
                 [weekNumber]="true"
                 [navigation]="false"
+                [style.width.px]="200"
                 ngDefaultControl
               ></kendo-datepicker>
-            </kendo-label>
-          </kendo-formfield>
-          <!-- Time -->
-          <kendo-formfield *ngSwitchCase="fieldType.Time" [name]="item.szACFieldName">
-            <kendo-label [text]="item.szACFieldName">
+            </div>
+            <!-- Time -->
+            <div *ngSwitchCase="fieldType.Time" class="ad-field">
+              <kendo-label [for]="fieldType" [text]="item.szACFieldName">
+              </kendo-label>
               <kendo-timepicker
-                [formControlName]="item.szACFieldName"
-                [popupSettings]="{ animate: false }"
-                ngDefaultControl
+                #fieldType
+                [(ngModel)]="item.typedValue"
+                [name]="item.szACFieldName"
                 required
+                ngDefaultControl
               ></kendo-timepicker>
-            </kendo-label>
-          </kendo-formfield>
-          <!-- DateTime -->
-          <kendo-formfield *ngSwitchCase="fieldType.DateTime" [name]="item.szACFieldName">
-            <kendo-label [text]="item.szACFieldName">
+            </div>
+            <!-- DateTime -->
+            <div *ngSwitchCase="fieldType.DateTime" class="ad-field">
+              <kendo-label [for]="fieldDateTime" [text]="item.szACFieldName">
+              </kendo-label>
               <kendo-datetimepicker
-                [formControlName]="item.szACFieldName"
-                [popupSettings]="{ animate: false }"
+                #fieldDateTime
+                [(ngModel)]="item.typedValue"
+                [name]="item.szACFieldName"
                 [weekNumber]="true"
                 [navigation]="false"
                 [format]="format"
+                required
                 ngDefaultControl
               ></kendo-datetimepicker>
-            </kendo-label>
-          </kendo-formfield>
+            </div>
+          </div>
         </div>
-      </div>
-    </form>
-    <kendo-dialog-actions>
-      <button kendoButton (click)="onSave($event)">Save</button>
-
-      <button kendoButton (click)="onCancel($event)">Cancel</button>
-    </kendo-dialog-actions>
+      </form>
+      <kendo-dialog-actions>
+        <button
+          kendoButton
+          class="ad-save-button"
+          [disabled]="!formDataValid"
+          (click)="onSave($event)"
+        >
+          Save
+        </button>
+        <button kendoButton (click)="onCancel($event)">Cancel</button>
+      </kendo-dialog-actions>
+    </div>
   </kendo-dialog>
 </ng-container>

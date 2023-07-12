@@ -41,7 +41,7 @@
 
       <kendo-grid-command-column title="command" [width]="220">
         <ng-template kendoGridCellTemplate let-dataItem>
-          <button [disabled] ="false" kendoGridEditCommand>Edit</button>
+          <button class="a-dialog-edit-btn" [disabled] ="false" kendoGridEditCommand>Edit</button>
           <button [disabled] ="false" kendoGridRemoveCommand>Delete</button>
         </ng-template>
       </kendo-grid-command-column>
