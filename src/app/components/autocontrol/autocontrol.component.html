@@ -10,39 +10,44 @@
       [pageSize]="15"
       [pageable]="true"
       [sortable]="true"
+      [filterable]="filterMode"
       (selectionChange)="selectionChange($event)"
       (edit)="editHandler($event)"
       (remove)="removeHandler($event)"
       (add)="addHandler()"
     >
 
-      <kendo-grid-checkbox-column
+      <!-- <kendo-grid-checkbox-column
+        [width]="50"
         [showSelectAll]="false"
         [columnMenu]="false"
-      ></kendo-grid-checkbox-column>
+      ></kendo-grid-checkbox-column> -->
 
-      <kendo-grid-column field="nACId" title="ID"> </kendo-grid-column>
+      <kendo-grid-column field="nACId" title="ID" [width]="80"> </kendo-grid-column>
 
-      <kendo-grid-column field="szLineName" title="Line"> </kendo-grid-column>
+      <kendo-grid-column field="szLineName" title="Line" [width]="100"> </kendo-grid-column>
 
-      <kendo-grid-column field="szACName" title="Line Name">
+      <kendo-grid-column field="szACName" title="Line Name" [filterable]="false">
       </kendo-grid-column>
 
       <kendo-grid-column field="szArea" title="Area"> </kendo-grid-column>
 
-      <kendo-grid-column field="nStatus" title="Status"> </kendo-grid-column>
+      <!-- <kendo-grid-column field="nStatus" title="Status"> </kendo-grid-column> -->
 
-      <kendo-grid-column field="szStatus" title="Status"> </kendo-grid-column>
+      <kendo-grid-column field="szStatus" title="Status" [width]="100" [filterable]="false"> </kendo-grid-column>
 
-      <kendo-grid-column field="szComment" title="Comment"> </kendo-grid-column>
+      <kendo-grid-column field="szComment" title="Comment" [filterable]="false"> </kendo-grid-column>
 
-      <kendo-grid-column field="tLastModified" title="Last Modified">
+      <kendo-grid-column field="tLastModified" title="Last Modified" [filterable]="false">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ formatDate(dataItem.tLastModified) }}
+        </ng-template>
       </kendo-grid-column>
 
-      <kendo-grid-command-column title="command" [width]="220">
+      <kendo-grid-command-column title="Action" [width]="150" [filterable]="false">
         <ng-template kendoGridCellTemplate let-dataItem>
           <button class="a-dialog-edit-btn" [disabled] ="false" kendoGridEditCommand>Edit</button>
-          <button [disabled] ="false" kendoGridRemoveCommand>Delete</button>
+          <!-- <button [disabled] ="false" kendoGridRemoveCommand>Delete</button> -->
         </ng-template>
       </kendo-grid-command-column>
     </kendo-grid>

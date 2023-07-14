@@ -1,6 +1,9 @@
+.ad-main {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+}
 
-
-.ad-field{
+.ad-field {
   height: 40px;
   margin: 5px 15px;
   display: flex;
@@ -8,7 +11,6 @@
 }
 
 .ad-field-file-upload {
-  height: 40px;
   margin: 5px 15px;
 }
 
@@ -17,7 +19,7 @@
   align-items: center;
 }
 .ad-file-upload-btn {
-  button{
+  button {
     height: 27px;
     border-radius: 15px;
     background-color: #39628f;
@@ -26,27 +28,106 @@
 }
 
 .ad-file-upload-info {
-
 }
 
 .ad-save-button {
-  background-color: #39628f;
+  background-color: #073a73;
   color: white;
 }
 
 .ad-file-input {
   display: none;
 }
+
+.ad-fu-file-content {
+  min-height: 75px;
+  max-height: 200px;
+  margin: 0px 25px;
+  padding-top: 5px;
+}
+.ad-fu-file-content-text {
+}
+
 .ad-fu-file-row {
   display: flex;
   align-items: center;
 }
 
 .ad-fu-file-info {
-  min-height: 250px;
-
+  padding-right: 0px 1px 25px 0px;
+  width: 270px;
 }
 
 .ad-fu-file-remove {
-  align-self:self-end;
+  align-self: self-end;
+
+  button {
+    height: 27px;
+    border-radius: 15px;
+  }
+}
+
+kendo-label {
+  width: 200px;
+}
+
+.ad-field-string {
+  margin: 5px 15px;
+}
+
+.ad-field-string-data {
+  display: flex;
+  align-items: center;
+}
+.ad-field-text-area {
+  display: inline-flex;
+  min-height: 100px;
+  max-height: 200px;
+  margin-left: 5px;
+  width: 362px;
+  resize: vertical;
+}
+
+.adFieldTextAreaNormal {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+.adFieldTextAreaError {
+  border-color: red;
+  box-shadow: 0 0 5px #c94845;
+}
+
+.adFieldTextAreaNormal:focus {
+  outline: none !important;
+  border: 1px solid gray;
+  box-shadow: 0 0 10px #719ece;
+}
+
+.adFieldTextAreaError:focus {
+  outline: none !important;
+  border: 1px solid red;
+  box-shadow: 0 0 5px #c94845;
+}
+
+.ad-field-popup {
+  padding: 15px;
+  background-color: #fcf7f8;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+}
+
+.ad-field-fault-cross-img {
+  width: 18px;
+  height: 18px;
+}
+
+.ad-field-fault-cross-img:hover {
+  cursor: pointer;
+}
+
+.ad-field-error-badge {
+  margin-left: 10px;
+}
+.itemDataError {
+  border: 1px solid red;
+  box-shadow: 0 0 5px #c94845;
 }

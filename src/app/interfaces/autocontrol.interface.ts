@@ -17,12 +17,15 @@ export interface IAutocontrolDialogField {
   szGroupName: string;
   szACFieldName: string;
   nFieldDataType: number;
-  bHasLimit: number;
+  bHasLimit: boolean;
   rMinValue: number;
   rMaxValue: number;
   szValue: string;
+  szValueDefault: string;
   typedValue: any;
   enumData:IAutocontrolFieldEnum[];
+  dataError: boolean;
+  showPopup: boolean;
 }
 export interface IAutocontrolField {
   nKey: number;

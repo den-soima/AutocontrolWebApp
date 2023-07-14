@@ -13,8 +13,7 @@ import {
 } from 'src/app/interfaces/autocontrol.interface';
 import { AutocontrolCrudService } from 'src/app/services/autocontrol.service';
 import { FieldType } from 'src/app/enums/autocontro-fields.enum';
-import { FileRestrictions, FileInfo } from '@progress/kendo-angular-upload';
-import { FileSelectComponent, FileState } from '@progress/kendo-angular-upload';
+
 @Component({
   selector: 'app-autocontrol-dialog',
   templateUrl: './autocontrol-dialog.component.html',
@@ -23,16 +22,9 @@ import { FileSelectComponent, FileState } from '@progress/kendo-angular-upload';
 export class AutocontrolDialogComponent implements OnInit, OnChanges {
   public dialogFields: IAutocontrolDialogField[] = [];
   public active = false;
-  public uploadRestrictions: FileRestrictions = {
-    allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
-  };
 
   public format = 'MM/dd/yyyy HH:mm';
-
-  public filesToUpload: Array<File> = [];
-  public filesToUploadSize: number = 0;
   public formDataValid: boolean = true;
-
 
   public get fieldType(): typeof FieldType {
     return FieldType;
@@ -47,13 +39,6 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     console.log('OnInit');
-    // if (this.nKeyAC)
-    //   this.autocontrolService
-    //     .getDialogFieldsByACId(this.nKeyAC)
-    //     .subscribe((data) => {
-    //       this.dialogFileds = data;
-    //       this.createFormFields(this.dialogFileds);
-    //     });
   }
 
   ngOnChanges(): void {
@@ -86,19 +71,23 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
         this.autocontrolService
           .getEnumsByFieldId(item.nACFId)
           .subscribe((data) => {
-            this.dialogFields[index].enumData = data;
-            this.dialogFields[index].typedValue = this.dialogFields[
-              index
-            ].enumData.find((en) => en.nEnumValue == parseInt(item.szValue));
+            if (data) {
+              this.dialogFields[index].enumData = data;
+
+              let defaultEnum: IAutocontrolFieldEnum = {
+                nACFId: data[0].nACFId,
+                nEnumValue: data[0].nEnumValue,
+                szEnumValue: data[0].szEnumValue,
+              };
+
+              this.dialogFields[index].typedValue = item.szValue
+                ? data.find((en) => en.nEnumValue == parseInt(item.szValue))
+                : defaultEnum;
+            }
           });
       }
     });
   }
-
-  // createFilesUploadTypedData(nACFId: number) {
-  //   const index = this.dialogFields.findIndex((item) => item.nACFId == nACFId);
-  //   this.dialogFields[index].typedValue = this.filesToUpload;
-  // }
 
   typeValue(nACFId: number, type: number, value: string): any {
     switch (type) {
@@ -115,8 +104,7 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
         this.createEnumTypedData();
         break;
       case FieldType.File:
-        // this.createFilesUploadTypedData(nACFId);
-        return this.filesToUpload;
+        return new Array<File>();
         break;
       case FieldType.Date:
         return Date.parse(value) ? new Date(value) : new Date();
@@ -162,7 +150,11 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
             this.updateEnumField(nKey, item.typedValue);
             break;
           case FieldType.File:
-            this.uploadFiles(item.typedValue);
+            item.typedValue.forEach(
+              (file: File) => (szValue += file.name + ';')
+            );
+            this.uploadFiles(item.nACFId, item.typedValue);
+            this.updateField(nKey, szValue);
             break;
           case FieldType.Date:
             szValue = item.typedValue.toUTCString();
@@ -185,10 +177,10 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
     this.closeForm();
   }
 
-  uploadFiles(files: File[]) {
+  uploadFiles(nACFId: number, files: File[]) {
     if (files)
       files?.forEach((file: File) => {
-        this.autocontrolService.postFile(file).subscribe(
+        this.autocontrolService.postFile(nACFId, file).subscribe(
           (response) => {
             console.log('File upload success', response);
           },
@@ -197,8 +189,6 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
           }
         );
       });
-
-      this.filesToUpload = [];
   }
 
   updateEnumField(key: number, enumItem: IAutocontrolFieldEnum) {
@@ -231,21 +221,45 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
   }
 
   onFileSelected(field: IAutocontrolDialogField, event: any) {
-    console.log(event.target.files);
-    console.log(field);
-
-    const file = event.target.files[0];
-
-    if (file) this.filesToUpload.push(file);
-
     const index = this.dialogFields.findIndex(
       (item) => item.nACFId == field.nACFId
     );
-    console.log(index);
 
-    if (index >= 0) this.dialogFields[index].typedValue=this.filesToUpload;
+    if (index >= 0)
+      this.dialogFields[index].typedValue.push(event.target.files[0]);
 
-    this.filesToUpload.forEach(item=> this.filesToUploadSize+=item.size/1000);
+    this.calculateUploadSize(field);
+  }
+
+  onFileInputClick(event: any) {
+    console.log(event);
+    event.preventDefault();
+  }
+
+  calculateUploadSize(field: IAutocontrolDialogField): number {
+    let size = 0;
+    const index = this.dialogFields.findIndex(
+      (item) => item.nACFId == field.nACFId
+    );
+
+    this.dialogFields[index].typedValue.forEach(
+      (file: File) => (size += file.size / 1024)
+    );
+
+    return size;
+  }
+
+  onFileRemove(field: IAutocontrolDialogField, name: string) {
+    console.log(field);
+    console.log(name);
+    const fieldIndex = this.dialogFields.findIndex(
+      (item) => item.nACFId == field.nACFId
+    );
+    const fileIndex = this.dialogFields[fieldIndex].typedValue.findIndex(
+      (file: File) => file.name == name
+    );
+
+    this.dialogFields[fieldIndex].typedValue.splice(fileIndex, 1);
   }
 
   onCancel(e: MouseEvent) {
@@ -256,5 +270,24 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
 
   closeForm(): void {
     this.active = false;
+  }
+
+  onChangeFieldNumeric(item: IAutocontrolDialogField) {
+    item.dataError =
+      item.bHasLimit &&
+      (item.typedValue < item.rMinValue || item.typedValue > item.rMaxValue);
+
+    if (!item.dataError) item.showPopup = false;
+  }
+
+  showPopup(item: IAutocontrolDialogField) {
+    item.showPopup = !item.showPopup;
+  }
+
+  onChangeFieldString(item: IAutocontrolDialogField) {
+    if (item.szValueDefault)
+      item.dataError = item.typedValue != item.szValueDefault;
+
+    if (!item.dataError) item.showPopup = false;
   }
 }

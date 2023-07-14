@@ -30,9 +30,15 @@ import { EfficiencyComponent } from './components/report/report-data/efficiency/
 import { StatesGraphComponent } from './components/report/report-data/states-graph/states-graph.component';
 import { ReportHeaderComponent } from './components/report/report-data/report-header/report-header.component';
 import { AutocontrolDialogComponent } from './components/autocontrol/autocontrol-dialog/autocontrol-dialog.component';
-import { DialogComponent } from './autocontrol/dialog/dialog.component';
+
 import { UploadsModule } from '@progress/kendo-angular-upload';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+import { PopupModule } from '@progress/kendo-angular-popup';
+import { TooltipsModule } from '@progress/kendo-angular-tooltip';
+import { IndicatorsModule } from '@progress/kendo-angular-indicators';
+
+
+
 
 @NgModule({
   declarations: [
@@ -45,8 +51,7 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
     EfficiencyComponent,
     StatesGraphComponent,
     ReportHeaderComponent,
-    AutocontrolDialogComponent,
-    DialogComponent,
+    AutocontrolDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +76,10 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
     ProgressBarModule,
     ChartsModule,
     UploadsModule,
-    DateInputsModule
+    DateInputsModule,
+    PopupModule,
+    TooltipsModule,
+    IndicatorsModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en' },

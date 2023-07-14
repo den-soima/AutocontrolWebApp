@@ -19,16 +19,38 @@
                 [(ngModel)]="item.typedValue"
                 [name]="item.szACFieldName"
                 format="n0"
-                [min]="item.rMinValue"
-                [max]="item.rMaxValue == 0 ? item.rMaxValue : 100000000"
                 [step]="10"
+                [min]="0"
+                (valueChange)="onChangeFieldNumeric(item)"
+                [ngClass]="{ itemDataError: item.dataError }"
                 ngDefaultControl
               >
               </kendo-numerictextbox>
+
+              <div *ngIf="item.dataError" class="ad-field-error-badge">
+                <span #anchorFieldInteger>
+                  <img
+                    src="./assets/cross.png"
+                    alt="Fault cross"
+                    (click)="showPopup(item)"
+                    class="ad-field-fault-cross-img"
+                  />
+                </span>
+                <kendo-popup
+                  [anchor]="{ nativeElement: anchorFieldInteger }"
+                  *ngIf="item.showPopup"
+                >
+                  <div class="ad-field-popup">
+                    Value out of range! <br />
+                    min = {{ item.rMinValue }} <br />
+                    max = {{ item.rMaxValue }}
+                  </div>
+                </kendo-popup>
+              </div>
             </div>
             <!-- String -->
-            <div *ngSwitchCase="fieldType.String" class="ad-field">
-              <kendo-label [for]="fieldString" [text]="item.szACFieldName">
+            <div *ngSwitchCase="fieldType.String" class="ad-field-string">
+              <!-- <kendo-label [for]="fieldString" [text]="item.szACFieldName">
               </kendo-label>
               <kendo-textbox
                 #fieldString
@@ -39,7 +61,36 @@
                 required
                 ngDefaultControl
               >
-              </kendo-textbox>
+              </kendo-textbox> -->
+              <kendo-label [text]="item.szACFieldName"></kendo-label>
+              <div class="ad-field-string-data">
+              <textarea
+                class="ad-field-text-area adFieldTextAreaNormal"
+                [(ngModel)]="item.typedValue"
+                [name]="item.szACFieldName"
+                (ngModelChange)="onChangeFieldString(item)"
+                [ngClass]="{ 'adFieldTextAreaNormal': !item.dataError, 'adFieldTextAreaError': item.dataError}"
+              ></textarea>
+              <div *ngIf="item.dataError" class="ad-field-error-badge">
+                <span #anchorFieldString>
+                  <img
+                    src="./assets/cross.png"
+                    alt="Fault cross"
+                    (click)="showPopup(item)"
+                    class="ad-field-fault-cross-img"
+                  />
+                </span>
+                <kendo-popup
+                  [anchor]="{ nativeElement: anchorFieldString }"
+                  *ngIf="item.showPopup"
+                >
+                  <div class="ad-field-popup">
+                    Default text: <br />
+                   {{ item.szValueDefault }}
+                  </div>
+                </kendo-popup>
+              </div>
+            </div>
             </div>
             <!-- Float -->
             <div *ngSwitchCase="fieldType.Float" class="ad-field">
@@ -50,11 +101,32 @@
                 [(ngModel)]="item.typedValue"
                 [name]="item.szACFieldName"
                 format="n2"
-                [min]="item.rMinValue"
-                [max]="item.rMaxValue == 0 ? item.rMaxValue : 100000000"
                 [step]="10"
+                [min]="0"
+                (valueChange)="onChangeFieldNumeric(item)"
+                [ngClass]="{ itemDataError: item.dataError }"
               >
               </kendo-numerictextbox>
+              <div *ngIf="item.dataError" class="ad-field-error-badge">
+                <span #anchorFieldFloat>
+                  <img
+                    src="./assets/cross.png"
+                    alt="Fault cross"
+                    (click)="showPopup(item)"
+                    class="ad-field-fault-cross-img"
+                  />
+                </span>
+                <kendo-popup
+                  [anchor]="{ nativeElement: anchorFieldFloat }"
+                  *ngIf="item.showPopup"
+                >
+                  <div class="ad-field-popup">
+                    Value out of range! <br />
+                    min = {{ item.rMinValue }} <br />
+                    max = {{ item.rMaxValue }}
+                  </div>
+                </kendo-popup>
+              </div>
             </div>
             <!-- Enum -->
             <div *ngSwitchCase="fieldType.Enum" [class]="'ad-field'">
@@ -73,41 +145,40 @@
             </div>
             <!-- File -->
             <div *ngSwitchCase="fieldType.File" class="ad-field-file-upload">
-              <!-- <kendo-fileselect
-                class="ad-fileselect"
-                [(ngModel)]="item.typedValue"
-                name="myFileSelect"
-                #myFileSelect="ngModel"
-                ngDefaultModel
-              >
-              </kendo-fileselect> -->
+              <kendo-label [text]="item.szACFieldName"></kendo-label>
               <input
                 type="file"
                 name="myFileSelect"
                 (change)="onFileSelected(item, $event)"
+                onClick="this.value = null"
                 class="ad-file-input"
                 #fileUpload
               />
               <div class="ad-file-upload-action">
                 <div class="ad-file-upload-btn">
-                <button  (click)="fileUpload.click()">
-                  attach
-                </button>
-              </div>
+                  <button (click)="fileUpload.click()">attach</button>
+                </div>
                 <div class="ad-file-upload-info">
-                  <span> {{ filesToUpload.length }} files. </span>
+                  <span> {{ item.typedValue.length }} files. </span>
                   <span>
-                    Total size: {{ filesToUploadSize.toFixed(2) }} kB</span
+                    Total size:
+                    {{ this.calculateUploadSize(item).toFixed(2) }} kB</span
                   >
                 </div>
               </div>
-              <div *ngFor="let file of item.typedValue">
-                <div class="ad-fu-file-row">
-                  <div class="ad-fu-file-info">
-                    Name: {{ file.name }}, size {{ file.size }}
-                  </div>
-                  <div class="ad-fu-file-remove">
-                    <button onclick="">Remove</button>
+              <div class="ad-fu-file-content">
+                <div class="ad-fu-file-content-text">Selected files:</div>
+                <div *ngFor="let file of item.typedValue">
+                  <div class="ad-fu-file-row">
+                    <div class="ad-fu-file-info">
+                      Name: {{ file.name }}, size
+                      {{ (file.size / 1024).toFixed(2) }}
+                    </div>
+                    <div class="ad-fu-file-remove">
+                      <button (click)="onFileRemove(item, file.name)">
+                        Remove
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -122,16 +193,15 @@
                 [name]="item.szACFieldName"
                 [weekNumber]="true"
                 [navigation]="false"
-                [style.width.px]="200"
                 ngDefaultControl
               ></kendo-datepicker>
             </div>
             <!-- Time -->
             <div *ngSwitchCase="fieldType.Time" class="ad-field">
-              <kendo-label [for]="fieldType" [text]="item.szACFieldName">
+              <kendo-label [for]="fieldTime" [text]="item.szACFieldName">
               </kendo-label>
               <kendo-timepicker
-                #fieldType
+                #fieldTime
                 [(ngModel)]="item.typedValue"
                 [name]="item.szACFieldName"
                 required
