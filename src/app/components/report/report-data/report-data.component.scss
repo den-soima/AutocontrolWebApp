@@ -1,7 +1,7 @@
 @mixin font-title {
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 1vw;
   text-decoration-color: black;
   background-color: lightgray;
 }
@@ -13,7 +13,7 @@
 table {
   border-collapse: collapse;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 1vw;
   td,
   th {
     border: 1px solid #ddd;
@@ -26,21 +26,32 @@ table {
 
 }
 
+.td-header {
+  font-size: 1vw;
+}
+
 .td-title {
   @include font-title();
   width: 85px;
   padding-left: 3px;
+  font-size: 1vw;
 }
-
+.td-valueslong {
+  width: 130px;
+  text-align: right;
+  padding-right: 3px;
+  font-size: 1vw;
+}
 .td-values {
   width: 100px;
   text-align: right;
   padding-right: 3px;
+  font-size: 1vw;
 }
 .td-values-span{
   font-weight: bold;
-  font-size: 17px;
-  width: 80px;
+  font-size: 1.5vw;
+  width: 120px;
   text-align: center;
 }
 

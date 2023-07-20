@@ -20,6 +20,8 @@
   height: 50px;
   text-align: center;
   opacity: 0.999;
+  font-size: 0.8vw;
+  font-weight: bold;
 }
 
 .level {
@@ -40,7 +42,8 @@
   height: 60px;
   border: solid 0.15px lightgray;
   border-radius: 3px;
-  font-weight: bold;
+  font-weight: bolder;
+  font-size: larger;
   overflow-wrap: break-word;
   align-items: center;
   justify-content: center;
@@ -137,6 +140,22 @@
 .k-cell-inner > .k-link {
   justify-content: center;
   text-align: center;
+}
+
+.mainColumn {
+  font-size: 1.5vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bolder;
+}
+
+.standardColumn {
+  font-size: 1vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
 }
 
 .dashboard-footer {

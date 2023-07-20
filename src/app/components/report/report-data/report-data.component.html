@@ -5,7 +5,7 @@
       <table>
         <tr>
           <td class="td-title">Nominal</td>
-          <td class="td-values">
+          <td class="td-valueslong" >
             {{ this.formatNumber(this.reportData?.productionInfo?.nRatedCapacity!) }}
             {{ this.reportData?.productionInfo?.capacityUnit }}
           </td>
@@ -18,20 +18,20 @@
         </tr>
         <tr>
           <td rowspan="2" class="td-title">Producido</td>
-          <td class="td-values">
+          <td class="td-valueslong">
             {{ this.formatNumber(this.reportData?.productionInfo?.actualProduction!) }}
             {{ this.reportData?.productionInfo?.formatUnit }}
           </td>
         </tr>
         <tr>
-          <td class="td-values">
+          <td class="td-valueslong">
             {{ this.formatNumber(this.reportData?.productionInfo?.actualProductionCaj!) }}
             {{ this.reportData?.productionInfo?.skuUnit }}
           </td>
         </tr>
         <tr>
           <td class="td-title">Estimado</td>
-          <td class="td-values">
+          <td class="td-valueslong">
             {{ this.formatInteger(this.reportData?.productionInfo?.actualProductionCaj!/this.reportData?.productionInfo?.ratioOfCurrentShiftDuration!) }}
             {{ this.reportData?.productionInfo?.skuUnit }}
           </td>
@@ -80,8 +80,8 @@
     <div class="r-b-box7">
       <table>
         <tr>
-          <th colspan="2">Rechazos</th>
-          <th>Ultima hora</th>
+          <th class="td-header" colspan="2">Rechazos</th>
+          <th class="td-header"> Ultima hora</th>
         </tr>
 
         <tr>

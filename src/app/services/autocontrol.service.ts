@@ -37,12 +37,12 @@ export class AutocontrolCrudService {
     );
   }
 
-  postFile(nACFId: number, file: File): Observable<boolean> {
+  postFile(nACId: number, file: File): Observable<boolean> {
     const formData: FormData = new FormData();
     formData.append('file', file);
     console.log(formData.get(file.name));
     return this.http
-      .post<boolean>(`${this.baseURL}/autocontrol/field/file/${nACFId}`, formData);
+      .post<boolean>(`${this.baseURL}/autocontrol/field/file/${nACId}`, formData);
 }
 
 

@@ -37,6 +37,7 @@ import { PopupModule } from '@progress/kendo-angular-popup';
 import { TooltipsModule } from '@progress/kendo-angular-tooltip';
 import { IndicatorsModule } from '@progress/kendo-angular-indicators';
 
+import { SdkServicesBaseModule, DIALOG_SERVICE} from '@proleit/sdk-services-base';
 
 
 
@@ -56,11 +57,11 @@ import { IndicatorsModule } from '@progress/kendo-angular-indicators';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    //  SdkServicesBaseModule.forRoot({
-    //   "clientId":environment.clientId,
-    //   "redirectUrl":environment.redirectUrl,
-    //   "pitBaseUrl":environment.serverUrl,
-    //   "scopes":"openid profile basecommon"}),
+     SdkServicesBaseModule.forRoot({
+      "clientId":environment.clientId,
+      "redirectUrl":environment.redirectUrl,
+      "pitBaseUrl":environment.serverUrl,
+      "scopes":"openid profile basecommon"}),
     SdkComponentsCommonModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -83,10 +84,13 @@ import { IndicatorsModule } from '@progress/kendo-angular-indicators';
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'en' },
-    { provide: APP_BASE_HREF, useValue: '/lmsmodule/lmsservice'}
-  //  { provide: DIALOG_SERVICE, useClass: DialogService },
+    { provide: APP_BASE_HREF, useValue: '/lmsmodule/lmsservice'},
+    { provide: DIALOG_SERVICE, useClass: DialogService }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {}
+export class AppModule {
+
+
+}

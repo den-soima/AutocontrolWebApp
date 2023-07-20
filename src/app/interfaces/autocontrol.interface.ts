@@ -38,6 +38,7 @@ export interface IAutocontrolField {
   tDataMeasured: Date | null;
   tLastUpdated: Date | null;
   bDeleted: boolean;
+  szPiTBaseUserUid: string | null;
 }
 
 export interface IAutocontrolFieldEnum {

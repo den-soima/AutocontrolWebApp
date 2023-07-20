@@ -10,6 +10,7 @@ import {
   RemoveEvent,
 } from '@progress/kendo-angular-grid';
 import { FilterableSettings } from '@progress/kendo-angular-grid';
+import { ServiceDiscoveryService } from '@proleit/sdk-services-base';
 @Component({
   selector: 'app-lines',
   templateUrl: './autocontrol.component.html',
@@ -22,11 +23,17 @@ export class AutocontrolComponent implements OnInit {
   public editItem: IAutocontrol | undefined;
   public nKeyAC: number = 0;
   public filterMode: FilterableSettings = "menu";
+  public serviceDiscovery: any;
+  public pitBaseUserId: string = "d860efca-22d9-47fd-8249-791ba61b07c7";
 
   /**
    *
    */
-  constructor(public autocontrolService: AutocontrolCrudService) {}
+  constructor(public autocontrolService: AutocontrolCrudService, private sd: ServiceDiscoveryService) {
+
+      this.serviceDiscovery  = sd;
+      //this.pitBaseUserId = this.serviceDiscovery.baseValueProvider.baseUserid._value;
+  }
 
   ngOnInit() {
     this.autocontrolService.getAutocontrols().subscribe((data) => {
@@ -35,12 +42,12 @@ export class AutocontrolComponent implements OnInit {
   }
 
   public selectionChange(event: any): void {
-    console.log('Grid - onStateChange');
-    console.log(event);
     event.selectedRows[0].nACId = true;
     this.autocontrolData.find(
       (item) => item.nACId == event.selectedRows[0].nACId
     )?.enableButtons == true;
+    console.log(this.serviceDiscovery);
+    console.log(this.pitBaseUserId);
   }
 
   public addHandler() {

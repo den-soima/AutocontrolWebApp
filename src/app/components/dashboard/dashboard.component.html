@@ -12,35 +12,53 @@
       id="dashboard-grid"
       #grid
     >
-      <kendo-grid-column field="szMachine" title="Linea" [headerStyle]="{}">
+      <kendo-grid-column field="szMachine" title="Linea" [headerStyle]="{}" >
+        <ng-template kendoGridCellTemplate let-dataItem>
+        <div class="mainColumn">
+          {{ dataItem.szMachine }}
+        </div>
+        </ng-template>
+
       </kendo-grid-column>
       <kendo-grid-column field="nRatedCapacity" title="Nominal">
-        <ng-template kendoGridCellTemplate let-dataItem>
-          {{ formatNumber(dataItem.nRatedCapacity) }}
-        </ng-template>
+
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="standardColumn">
+            {{ formatNumber(dataItem.nRatedCapacity) }}
+          </div>
+          </ng-template>
+
       </kendo-grid-column>
       <kendo-grid-column field="goodQty" title="Produccion">
         <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="standardColumn">
           {{ formatNumber(dataItem.goodQty) }}
+        </div>
         </ng-template>
       </kendo-grid-column>
       <kendo-grid-column field="emptyInspector" title="Vacio">
         <ng-template kendoGridCellTemplate let-dataItem>
-          {{ dataItem.emptyInspector > 0 ? dataItem.emptyInspector : "" }}
+          <div class="standardColumn">
+            {{ dataItem.goodQty === 0 ? '0' : (dataItem.emptyInspector > 0 ? ((dataItem.emptyInspector / dataItem.goodQty) * 100).toFixed(2) + "%" : "") }}
+          </div>
         </ng-template>
       </kendo-grid-column>
       <kendo-grid-column field="fullInspector" title="Lleno">
         <ng-template kendoGridCellTemplate let-dataItem>
-          {{ dataItem.fullInspector > 0 ? dataItem.fullInspector : "" }}
+          <div class="standardColumn">
+            {{ dataItem.goodQty === 0 ? '0' : (dataItem.fullInspector > 0 ? ((dataItem.fullInspector / dataItem.goodQty) * 100).toFixed(2) + "%" : "") }}
+          </div>
         </ng-template>
       </kendo-grid-column>
       <kendo-grid-column field="estimated" title="Estimacion">
         <ng-template kendoGridCellTemplate let-dataItem >
+          <div class="standardColumn">
           {{
             formatInteger(
               dataItem.goodQty / dataItem.ratioOfCurrentShiftDuration
             )
           }}
+        </div>
         </ng-template>
       </kendo-grid-column>
 
@@ -67,7 +85,9 @@
         [style]="{ 'text-align': 'center' }"
       >
         <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="standardColumn">
           {{ dataItem.nTank2 > 0 ? dataItem.nTank2 : "" }}
+        </div>
         </ng-template>
       </kendo-grid-column>
 
@@ -77,7 +97,9 @@
         [style]="{ 'text-align': 'center' }"
       >
         <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="standardColumn">
           {{ waterRate(dataItem.waterRate) }}
+        </div>
         </ng-template>
       </kendo-grid-column>
 

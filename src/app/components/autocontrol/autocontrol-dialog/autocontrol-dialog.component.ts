@@ -34,15 +34,16 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
 
   @Input() public nKeyAC: number = 0;
   @Input() public isNew: boolean = false;
+  @Input() public user: string | null = null;
   @Output() cancel: EventEmitter<undefined> = new EventEmitter();
   @Output() save: EventEmitter<IAutocontrolField[]> = new EventEmitter();
 
   ngOnInit(): void {
-    console.log('OnInit');
+
   }
 
   ngOnChanges(): void {
-    console.log('ngOnChnages');
+
 
     this.active = this.nKeyAC > 0;
     if (this.nKeyAC)
@@ -62,7 +63,6 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
         item.szValue
       );
     });
-    console.log(this.dialogFields);
   }
 
   createEnumTypedData() {
@@ -123,9 +123,6 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
   }
 
   onSave(e: MouseEvent) {
-    console.log('onSave');
-
-    console.log(e);
     e.preventDefault();
 
     if (this.formDataValid) {
@@ -153,7 +150,7 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
             item.typedValue.forEach(
               (file: File) => (szValue += file.name + ';')
             );
-            this.uploadFiles(item.nACFId, item.typedValue);
+            this.uploadFiles(item.nACId, item.typedValue);
             this.updateField(nKey, szValue);
             break;
           case FieldType.Date:
@@ -177,10 +174,10 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
     this.closeForm();
   }
 
-  uploadFiles(nACFId: number, files: File[]) {
+  uploadFiles(nACId: number, files: File[]) {
     if (files)
       files?.forEach((file: File) => {
-        this.autocontrolService.postFile(nACFId, file).subscribe(
+        this.autocontrolService.postFile(nACId, file).subscribe(
           (response) => {
             console.log('File upload success', response);
           },
@@ -207,9 +204,10 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
       tDataMeasured: null,
       tLastUpdated: null,
       bDeleted: false,
+      szPiTBaseUserUid: this.user
     };
 
-    console.log(autocontrolField);
+    console.log( autocontrolField);
     this.autocontrolService.updateAutocontrolField(autocontrolField).subscribe(
       (response) => {
         console.log('Field updated', response);
@@ -232,7 +230,6 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
   }
 
   onFileInputClick(event: any) {
-    console.log(event);
     event.preventDefault();
   }
 
@@ -250,8 +247,6 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
   }
 
   onFileRemove(field: IAutocontrolDialogField, name: string) {
-    console.log(field);
-    console.log(name);
     const fieldIndex = this.dialogFields.findIndex(
       (item) => item.nACFId == field.nACFId
     );
@@ -286,7 +281,7 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
 
   onChangeFieldString(item: IAutocontrolDialogField) {
     if (item.szValueDefault)
-      item.dataError = item.typedValue != item.szValueDefault;
+      item.dataError = item.bHasLimit && item.typedValue != item.szValueDefault;
 
     if (!item.dataError) item.showPopup = false;
   }

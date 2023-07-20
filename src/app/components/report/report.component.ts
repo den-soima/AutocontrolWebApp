@@ -10,7 +10,7 @@ import {
   ReportEfficiency,
   ReportErrorList,
   ReporDataLoadingStatus,
-} from '../../interfaces/report.interface'
+} from '../../interfaces/report.interface';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -52,30 +52,35 @@ export class ReportComponent implements OnInit, OnDestroy {
   // route
   routeId: string | null = '';
 
-  constructor(public reportService: ReportService, private route: ActivatedRoute) {}
+  constructor(
+    public reportService: ReportService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-
     this.routeId = this.route.snapshot.paramMap.get('id');
 
     this.reportService.getLines().subscribe((data: ReportLine[]) => {
       this.reportLines = data;
-      this.selectedLineByUrl = this.reportLines.find(x=>x.lineName==this.routeId);
-      if (this.selectedLineByUrl !== undefined) this.valueChange(this.selectedLineByUrl);
+      this.selectedLineByUrl = this.reportLines.find(
+        (x) => x.lineName == this.routeId
+      );
+      if (this.selectedLineByUrl !== undefined)
+        this.valueChange(this.selectedLineByUrl);
       this.linesLoaded = data.length > 1;
     });
 
     this.reloadInterval = setInterval(() => {
       this.loadData();
-      console.log("Report Interval");
+      console.log('Report Interval');
     }, 60000);
   }
 
   ngOnDestroy(): void {
-    if (this.reloadInterval){
-      clearInterval(this.reloadInterval)
-    console.log("Interval destoyed" + this.reloadInterval);
-    };
+    if (this.reloadInterval) {
+      clearInterval(this.reloadInterval);
+      console.log('Interval destoyed' + this.reloadInterval);
+    }
   }
   public valueChange(value: ReportLine): void {
     this.selectedLine = value;
@@ -86,17 +91,20 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
 
   loadData() {
-    this.reporDataLoadingStatus.loadProgress = 0;
-    this.loadHeader(this.selectedLine.lineLink);
-    this.loadProductionInfo(this.selectedLine.lineLink);
-    this.loadMachineError(this.selectedLine.lineLink);
-    this.loadMachineError2(this.selectedLine.lineLink);
-    this.loadStatesGraph(this.selectedLine.lineLink);
-    this.loadEfficiency(this.selectedLine.lineLink);
-    this.loadErroList(this.selectedLine.lineLink);
+    if (this.selectedLine.lineLink >= 0) {
+      this.reporDataLoadingStatus.loadProgress = 0;
 
-    this.buttonText = 'Cargando...';
-    this.loadButtonEnable = false;
+      this.loadHeader(this.selectedLine.lineLink);
+      this.loadProductionInfo(this.selectedLine.lineLink);
+      this.loadMachineError(this.selectedLine.lineLink);
+      this.loadMachineError2(this.selectedLine.lineLink);
+      this.loadStatesGraph(this.selectedLine.lineLink);
+      this.loadEfficiency(this.selectedLine.lineLink);
+      this.loadErroList(this.selectedLine.lineLink);
+
+      this.buttonText = 'Cargando...';
+      this.loadButtonEnable = false;
+    }
   }
 
   loadHeader(lineLink: number) {

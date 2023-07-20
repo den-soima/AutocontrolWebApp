@@ -1,49 +1,33 @@
-
 import {
   Component,
   Inject,
   LOCALE_ID,
   HostListener,
   OnInit,
-  ElementRef
-} from "@angular/core";
-import { environment } from "src/environments/environment";
-import { Router } from "@angular/router";
-//import { AuthorizationService } from "@proleit/sdk-services-base";
-//import { ServiceDiscoveryService } from "@proleit/sdk-services-base";
-import { ProcessMessage } from "@proleit/sdk-webframe";
-import { Observable } from "rxjs";
+  ElementRef,
+} from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
+import { AuthorizationService , ServiceDiscoveryService } from '@proleit/sdk-services-base';
+
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  @HostListener("document:afterRedirect", ["$event"])
+  @HostListener('document:afterRedirect', ['$event'])
+  @HostListener('document:userProfileReady', ['$event'])
   afterRedirect(event: CustomEvent) {
     this.router.navigate([event.detail]);
   }
-  // public listen({ detail }: CustomEvent): void {
-  //   const url = detail.split("?");
-  //   if (url.length > 1) {
-  //     const params: any = {};
-  //     url[1].split("&").forEach((x: any) => {
-  //       const a = x.split("=");
-  //       params[a[0]] = a[1];
-  //     });
-  //     this.router.navigate([url[0]], { queryParams: params });
-  //   } else {
-  //     this.router.navigate([detail]);
-  //   }
-  // }
+
   public frameRedirect = (uri: string, state: string) => {
     document.dispatchEvent(new CustomEvent('afterRedirect', { detail: state }));
-  }
+  };
 
-
-
-  title = "Autocontrol";
+  title = 'Autocontrol';
 
   public clientId: string;
   public pitBaseUrl: string;
@@ -59,62 +43,42 @@ export class AppComponent implements OnInit {
    */
   constructor(
     @Inject(LOCALE_ID)
-    public locale : string,
+    public locale: string,
     private router: Router,
-  //  private authorization: AuthorizationService,
-  //  private serviceDiscovery: ServiceDiscoveryService,
-    private element: ElementRef,
-
-    ) {
+    private authorization: AuthorizationService,
+    private serviceDiscovery: ServiceDiscoveryService,
+    private element: ElementRef
+  ) {
     this.clientId = environment.clientId;
     this.pitBaseUrl = environment.serverUrl;
     this.redirectUrl = environment.redirectUrl;
     this.logoutUrl = environment.logoutUrl;
-  //  this.authorization.redirected.subscribe(x => this.router.navigate([x]));
+
+    // authorization.redirected.subscribe((x: any) => {
+    //   const parameterIndex = x.indexOf('?');
+    //   if (parameterIndex > -1) {
+    //     const route = x.slice(0, parameterIndex);
+    //     const params = x.slice(parameterIndex + 1).split('&');
+    //     const paramObject: any = new Object();
+    //     params.forEach((param: any) => {
+    //       const paramElements = param.split('=');
+    //       paramObject[paramElements[0]] = paramElements[1];
+    //     });
+    //     this.router.navigate([route], { queryParams: paramObject });
+    //   } else {
+    //     this.router.navigate([x]);
+    //   }
+    // });
+
+    // this.authorization.redirected.subscribe(x => {
+    //   console.log(x);
+    //   this.router.navigate([x])})
+    serviceDiscovery.getAllServicesFromModule("UserMgmt").then(serviceInfo =>{
+      console.log(serviceInfo);
+    });
+
+
   }
 
-  ngOnInit(): void {
-    this.element.nativeElement.dispatchEvent(new CustomEvent('loadingProcess', {
-      detail: {
-        promise: new Promise<ProcessMessage>((resolve, reject) => {
-          resolve({ message: 'Connection successfully established' }),
-          reject({ message: 'Connection failed to be established', error: true, continue: false })
-        }),
-        processMessage: {
-          message: 'Establishing connection...',
-          weight: 10
-        }
-      },
-      bubbles: true
-    }));
-    this.element.nativeElement.dispatchEvent(new CustomEvent('loadingProcess', {
-      detail:   {
-        observable: new Observable<ProcessMessage>(subscriber => {
-          subscriber.next({ message: 'Connection successfully established' }),
-          subscriber.complete();
-        }),
-        processMessage: {
-          message: 'Establishing connection...',
-          weight: 5
-        }
-      },
-      bubbles: true
-    }));
-    this.element.nativeElement.dispatchEvent(new CustomEvent('loadingProcess', {
-      detail:  {
-        observable: new Observable<ProcessMessage>(subscriber => {
-          setTimeout( () => {
-            subscriber.error({ message: 'Logo could not be loaded', error: true, continue: true}),
-            subscriber.complete();
-          }, 500);
-        }),
-        processMessage: {
-          message: 'Loading Logo...',
-          weight: 3
-        }
-      },
-      bubbles: true
-    }));
-  }
-
+  ngOnInit(): void {}
 }
