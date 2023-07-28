@@ -25,7 +25,6 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
 
   public format = 'MM/dd/yyyy HH:mm';
   public formDataValid: boolean = true;
-
   public get fieldType(): typeof FieldType {
     return FieldType;
   }
@@ -122,57 +121,7 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
     }
   }
 
-  onSave(e: MouseEvent) {
-    e.preventDefault();
 
-    if (this.formDataValid) {
-      this.dialogFields.forEach((item) => {
-        const nKey = item.nACFId;
-        let szValue = '';
-
-        switch (item.nFieldDataType) {
-          case FieldType.Integer:
-            szValue = item.typedValue.toString();
-            this.updateField(nKey, szValue);
-            break;
-          case FieldType.String:
-            szValue = item.typedValue;
-            this.updateField(nKey, szValue);
-            break;
-          case FieldType.Float:
-            szValue = item.typedValue.toString();
-            this.updateField(nKey, szValue);
-            break;
-          case FieldType.Enum:
-            this.updateEnumField(nKey, item.typedValue);
-            break;
-          case FieldType.File:
-            item.typedValue.forEach(
-              (file: File) => (szValue += file.name + ';')
-            );
-            this.uploadFiles(item.nACId, item.typedValue);
-            this.updateField(nKey, szValue);
-            break;
-          case FieldType.Date:
-            szValue = item.typedValue.toUTCString();
-            this.updateField(nKey, szValue);
-            break;
-          case FieldType.Time:
-            szValue = item.typedValue.toUTCString();
-            this.updateField(nKey, szValue);
-            break;
-          case FieldType.DateTime:
-            szValue = item.typedValue.toUTCString();
-            this.updateField(nKey, szValue);
-            break;
-          default:
-        }
-      });
-    }
-
-    this.save.emit();
-    this.closeForm();
-  }
 
   uploadFiles(nACId: number, files: File[]) {
     if (files)
@@ -206,8 +155,6 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
       bDeleted: false,
       szPiTBaseUserUid: this.user
     };
-
-    console.log( autocontrolField);
     this.autocontrolService.updateAutocontrolField(autocontrolField).subscribe(
       (response) => {
         console.log('Field updated', response);
@@ -257,6 +204,58 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
     this.dialogFields[fieldIndex].typedValue.splice(fileIndex, 1);
   }
 
+  onSave(e: MouseEvent) {
+    e.preventDefault();
+
+    if (this.formDataValid) {
+      this.dialogFields.forEach((item) => {
+        const nKey = item.nACFId;
+        let szValue = '';
+
+        switch (item.nFieldDataType) {
+          case FieldType.Integer:
+            szValue = item.typedValue.toString();
+            this.updateField(nKey, szValue);
+            break;
+          case FieldType.String:
+            szValue = item.typedValue;
+            this.updateField(nKey, szValue);
+            break;
+          case FieldType.Float:
+            szValue = item.typedValue.toString();
+            this.updateField(nKey, szValue);
+            break;
+          case FieldType.Enum:
+            this.updateEnumField(nKey, item.typedValue);
+            break;
+          case FieldType.File:
+            item.typedValue.forEach(
+              (file: File) => (item.szValue += file.name + ';')
+            );
+            this.uploadFiles(item.nACId, item.typedValue);
+            this.updateField(nKey, item.szValue);
+            break;
+          case FieldType.Date:
+            szValue = item.typedValue.toUTCString();
+            this.updateField(nKey, szValue);
+            break;
+          case FieldType.Time:
+            szValue = item.typedValue.toUTCString();
+            this.updateField(nKey, szValue);
+            break;
+          case FieldType.DateTime:
+            szValue = item.typedValue.toUTCString();
+            this.updateField(nKey, szValue);
+            break;
+          default:
+        }
+      });
+    }
+
+    this.save.emit();
+    this.closeForm();
+  }
+
   onCancel(e: MouseEvent) {
     e.preventDefault();
     this.cancel.emit();
@@ -264,6 +263,7 @@ export class AutocontrolDialogComponent implements OnInit, OnChanges {
   }
 
   closeForm(): void {
+    this.dialogFields=[];
     this.active = false;
   }
 

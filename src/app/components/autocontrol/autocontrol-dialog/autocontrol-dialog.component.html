@@ -2,7 +2,7 @@
   <kendo-dialog
     *ngIf="active"
     [title]="
-      isNew ? 'Add new product' : 'Edit product - ' + dialogFields[0]?.szACName
+      isNew ? 'Add new values' : 'Edit values - ' + dialogFields[0]?.szACName
     "
     (close)="closeForm()"
   >
@@ -164,6 +164,27 @@
                     Total size:
                     {{ this.calculateUploadSize(item).toFixed(2) }} kB</span
                   >
+                </div>
+                <div *ngIf="item.szValue" class="ad-field-information-badge">
+                  <span #anchorFieldFile>
+                    <img
+                      src="./assets/info.png"
+                      alt="information"
+                      (click)="showPopup(item)"
+                      class="ad-field-fault-cross-img"
+                    />
+                  </span>
+                  <kendo-popup
+                    [anchor]="{ nativeElement: anchorFieldFile }"
+                    *ngIf="item.showPopup"
+                  >
+                    <div class="ad-field-popup">
+                      <div class="ad-field-popup-header">Uploaded files:</div>
+                      <div *ngFor="let file of item.szValue.split(';')">
+                        {{file}}
+                      </div>
+                    </div>
+                  </kendo-popup>
                 </div>
               </div>
               <div class="ad-fu-file-content">

@@ -70,9 +70,9 @@ export class AppComponent implements OnInit {
     //   }
     // });
 
-    // this.authorization.redirected.subscribe(x => {
-    //   console.log(x);
-    //   this.router.navigate([x])})
+    this.authorization.redirected.subscribe(x => {
+      console.log(x);
+      this.router.navigate([x])})
     serviceDiscovery.getAllServicesFromModule("UserMgmt").then(serviceInfo =>{
       console.log(serviceInfo);
     });
